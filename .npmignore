@@ -1,0 +1,7 @@
+node_modules
+.idea
+.cache
+.git
+.gitignore
+.Ds_Store
+package-lock.json

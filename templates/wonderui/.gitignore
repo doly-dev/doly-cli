@@ -1,0 +1,7 @@
+.idea
+.DS_Store
+.include
+.cache
+.browserify
+dist
+node_modules

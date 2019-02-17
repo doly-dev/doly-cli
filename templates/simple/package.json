@@ -1,0 +1,18 @@
+{
+  "name": "doly-scaffold",
+  "version": "1.0.0",
+  "description": "Development web with doly-cli.",
+  "scripts": {
+    "start": "doly dev",
+    "build": "doly build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "react-router-dom": "^4.3.1",
+    "whatwg-fetch": "^3.0.0"
+  }
+}

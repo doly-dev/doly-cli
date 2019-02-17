@@ -1,0 +1,19 @@
+{
+  "name": "doly-scaffold",
+  "version": "1.0.0",
+  "description": "build with cue-cli",
+  "scripts": {
+    "start": "doly dev",
+    "build": "doly build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "mobx": "^4.6.0",
+    "mobx-react": "^5.3.6",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "wonder-ui": "^0.3.3"
+  }
+}
