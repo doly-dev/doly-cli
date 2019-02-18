@@ -33,7 +33,6 @@ module.exports = function (jsonFile, options) {
               reject(err);
               return;
           }
-          console.log('--------------------修改成功');
           resolve(json);
         })
       }catch(err){

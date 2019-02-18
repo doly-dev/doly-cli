@@ -7,8 +7,8 @@
 - 🚨 create-react-app 的体验
 - 🐠 扩展 webpack 配置
 - ✂️ mock
-- 支持开发和构建不同 env 环境配置
-- 支持js/css/image构建自定义目录
+- ✨ 支持开发和构建不同 env 环境配置
+- 🍰 支持js/css/image构建自定义目录
 
 ## 快速开始
 
@@ -18,7 +18,6 @@ npm install doly-cli -g
 
 # 查看版本
 doly -v
-0.1.0
 
 # 初始化项目脚手架
 doly init [projectName]
@@ -33,7 +32,7 @@ doly build [env]
 
 ## Mock
 
-`doly dev` 支持 `mock` 功能，默认在 `mocker/index.js` 中进行配置。
+`doly dev` 支持 `mock` 功能，默认文件 `mocker/index.js` 中进行配置。配置将传给 [mocker-api](https://www.npmjs.com/package/mocker-api)
 
 示例：
 
