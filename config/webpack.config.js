@@ -25,6 +25,9 @@ function getWebpackConfig({
   const isDevWithServer = process.env.COMMANDER ==='dev';
   const isProd = process.env.NODE_ENV === 'production';
   const mode = isProd ? 'production' : 'development';
+  
+  // 开启模块热替换。如果要兼容IE9/10/11，需关闭模块热替换。由于模块热替换代码[react-dev-utils/webpackHotDevClient]没有进行编译，含有箭头函数等语法
+  const isEnabledHot = !config.devServer || typeof config.devServer.hot === 'undefined' || config.devServer.hot;
 
   // 默认优化项
   const defaultOptimization = {
@@ -115,27 +118,15 @@ function getWebpackConfig({
       include: paths.appSrc
     };
 
-    const sassRule = {
-      test: /\.(sc|sa)ss$/,
-      use: [
-        cssLoader, 
-        postcssLoader,
-        'sass-loader'
-      ],
-      include: paths.appSrc
-    }
-
     if(!config.cssInline && !isDevWithServer){
       cssRule.use.unshift(MiniCssExtractPlugin.loader);
       lessRule.use.unshift(MiniCssExtractPlugin.loader);
-      sassRule.use.unshift(MiniCssExtractPlugin.loader);
     }else{
       cssRule.use.unshift('style-loader');
       lessRule.use.unshift('style-loader');
-      sassRule.use.unshift('style-loader');
     }
 
-    return [cssRule, lessRule, sassRule];
+    return [cssRule, lessRule];
   }
 
   const jsRule = {
@@ -311,7 +302,9 @@ function getWebpackConfig({
     }
 
   }else{
-    plugins.push(new webpack.HotModuleReplacementPlugin());
+    if(isEnabledHot){
+      plugins.push(new webpack.HotModuleReplacementPlugin());
+    }
   }
 
   if(config.ignoreMomentLocale){
@@ -372,7 +365,7 @@ function getWebpackConfig({
 
   const webpackConfig =  {
     mode,
-    entry: getConfigEntry({entry: config.entry, isBuild: !isDevWithServer}),
+    entry: getConfigEntry({entry: config.entry, isBuild: !isDevWithServer, hot: isEnabledHot}),
     output: {
       path: paths.appBuild,
       publicPath: config.publicPath,

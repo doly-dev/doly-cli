@@ -2,13 +2,21 @@
 
 `doly-cli` 是一个包含 `init` `dev` `build` 的命令行工具，参考了 react-dev-utils，create-react-app，roadhog， umi等优秀工具。
 
-## 功能
-- 📦 开箱即用的 react 应用开发工具，内置 css-modules、babel、less、sass、postcss、HMR 等
+- 📦 开箱即用的 react 应用开发工具，内置 css-modules、babel、less、postcss、HMR 等
 - 🚨 create-react-app 的体验
 - 🐠 扩展 webpack 配置
 - ✂️ mock
 - ✨ 支持开发和构建不同 env 环境配置
-- 🍰 支持js/css/image构建自定义目录
+- 🍰 支持html/js/css/image构建自定义目录
+
+## Contents
+
+- [快速开始](#快速开始)
+- [Mock](#Mock)
+- [使用public目录](#使用public目录)
+- [不同环境配置](#不同环境配置)
+- [配置](#配置)
+- [如何兼容IE9/10/11](#如何兼容IE9/10/11)
 
 ## 快速开始
 
@@ -49,7 +57,7 @@ export default {
 };
 ```
 
-## 使用 public 目录
+## 使用public目录
 
 我们约定 `public` 目录下的文件会在 `dev` 和 `build` 时被自动 `copy` 到输出目录（默认是 `./dist`）下。所以可以在这里存放 favicon, iconfont, html里引用的图片等。
 
@@ -274,6 +282,7 @@ html: [{
 ```javascript
 image: {
   outputPath: 'images', // 图片输出地址，默认 images
+  name: '[name].[hash:8].[ext]', // 文件名
   limit: 1024*8 // 8kb内的图片转为base64
 }
 ```
@@ -461,6 +470,32 @@ proxy: {
 打包使用 `doly build [env]`，`env` 默认 production。
 
 
+
+## 如何兼容IE9/10/11
+
+1. 入口文件最顶部，引入 `@babel/polyfill`
+2. `doly.config.js` 关闭开发服务的模块热替换，需手动刷新浏览器。建议在测试IE兼容时再关闭
+3. `doly.config.js` 配置 `browserslist`
+
+安装 `polyfill`，并在入口文件 `app.js` 顶部引入
+
+```javascript
+import '@babel/polyfill'
+...
+```
+
+`doly.config.js` 配置：
+
+```javascript
+devServer: {
+  hot: false
+},
+browserslist: {
+  'last 2 versions',
+  '>1%',
+  'not ie <=8'
+}
+```
 
 
 

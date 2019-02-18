@@ -19,7 +19,8 @@ const webpackHotDevClientPath = require.resolve('react-dev-utils/webpackHotDevCl
 function getConfigEntry({ 
   cwd = process.cwd(), 
   entry,
-  isBuild=true
+  isBuild=true,
+  hot=true
 } = {}) {
   let entryObj = null;
   if (!entry) {
@@ -42,7 +43,7 @@ function getConfigEntry({
     );
   }
 
-  if (!isBuild) {
+  if (!isBuild && hot) {
     entryObj = Object.keys(entryObj).reduce(
       (memo, key) =>
         !Array.isArray(entryObj[key])

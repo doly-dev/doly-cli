@@ -12,7 +12,6 @@ module.exports = function ({
   const defaultConfig = {
     contentBase: paths.appBuild,
     compress: true, // 启用gzip压缩
-    // host: '127.0.0.1',
     host: '0.0.0.0',
     port: 9000, // 端口
     open: true, // 自动打开浏览器

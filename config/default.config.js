@@ -44,6 +44,7 @@ module.exports = {
   // 图片url-loader 配置
   image: {
     outputPath: 'images', // 图片输出地址，默认 images
+    name: '[name].[hash:8].[ext]', // 文件名
     limit: 1024*8 // 小于该大小的图片转为base64
   },
 
@@ -165,9 +166,6 @@ module.exports = {
 
   // 配置主题，实际上是配 less 变量。支持对象和字符串两种类型，字符串需要指向一个返回配置的文件。
   // theme,
-
-  // 配置 node-sass 的选项。
-  // sass,
 
   // 定义额外的 babel preset 列表，格式为数组。
   // extraBabelPresets,

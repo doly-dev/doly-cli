@@ -1,6 +1,6 @@
 {
   "name": "doly-cli",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "description": "A simple CLI for web development",
   "main": "index.js",
   "scripts": {
@@ -61,15 +61,12 @@
     "less-loader": "^4.1.0",
     "mini-css-extract-plugin": "^0.5.0",
     "mocker-api": "^1.6.6",
-    "node-sass": "^4.11.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "ora": "^3.1.0",
     "postcss-loader": "^3.0.0",
-    "pre-commit": "^1.2.2",
     "progress-bar-webpack-plugin": "^1.12.1",
     "react-dev-utils": "^7.0.1",
     "rimraf": "^2.6.3",
-    "sass-loader": "^7.1.0",
     "shelljs": "^0.8.3",
     "style-loader": "^0.23.1",
     "terser-webpack-plugin": "^1.2.1",
