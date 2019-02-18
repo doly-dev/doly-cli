@@ -32,7 +32,7 @@ doly build [env]
 
 ## Mock
 
-`doly dev` 支持 `mock` 功能，默认文件 `mocker/index.js` 中进行配置。配置将传给 [mocker-api](https://www.npmjs.com/package/mocker-api)
+`doly dev` 支持 `mock` 功能，默认文件 `mocker/index.js` 中进行配置。参考 [mocker-api](https://www.npmjs.com/package/mocker-api)
 
 示例：
 
@@ -58,6 +58,7 @@ export default {
 通过 [env](#env) 实现，`env` 除默认 `development` 和 `production` 外，可以任意配置。
 
 `doly dev [env]` 本地开发中可以运行不同环境配置，默认 `env` 为 `development` 。
+
 `doly build [env]`打包不同环境配置，默认 `env` 为 `production` 。
 
 本地开发运行生产环境:
@@ -251,8 +252,7 @@ ignoreMomentLocale: true
 
 ```javascript
 manifest: {
-  basePath: 'http://www.xxx.com/',
-  filename:
+  basePath: 'http://www.example.com/'
 },
 ```
 
@@ -289,7 +289,7 @@ image: {
 
 ### css
 
-配置 [mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin)。如果设置 `filename`，`hash`配置对该项无效，需自己配置文件名 `hash`。如果设置 `cssInline` 为 `true`，该配置无效。默认：
+配置 [mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin)。如果设置 `filename`，`hash`配置对该项无效，需自己配置文件名 `hash`。如果 `cssInline` 为 `true`，该配置无效。默认：
 
 ```javascript
 css: {
@@ -309,7 +309,7 @@ css: {
 
 ### cssInline
 
-设置为 `true` 后，样式将通过 `style-loader` 转换。默认 `false`
+样式包含js中，用style进行加载。默认为 `true`，样式通过 `style-loader` 转换。
 
 ### disableCSSModules
 
@@ -341,7 +341,7 @@ replace: {
 
 ```javascript
 define: {
-  APIURL: 'http://www.xxx.com/'
+  APIURL: 'http://www.example.com/'
 }
 ```
 
@@ -358,7 +358,7 @@ html:
 <script src='https://unpkg.com/react-dom@16.8.1/umd/react-dom.production.min.js'></script>
 ```
 
-doly.config.js:
+doly.config.js 中:
 
 ```javascript
 externals: {
