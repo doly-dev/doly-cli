@@ -16,7 +16,7 @@
 - [使用public目录](#使用public目录)
 - [不同环境配置](#不同环境配置)
 - [配置](#配置)
-- [如何兼容IE9/10/11](#如何兼容IE9/10/11)
+- [如何兼容IE9/10/11](#如何兼容IE)
 
 ## 快速开始
 
@@ -68,8 +68,6 @@ export default {
 `doly dev [env]` 本地开发中可以运行不同环境配置，默认 `env` 为 `development` 。
 
 `doly build [env]`打包不同环境配置，默认 `env` 为 `production` 。
-
-本地开发运行生产环境:
 
 ```javascript
 # 本地开发读取生产环境配置
@@ -147,6 +145,7 @@ module.exports = {
 - [define](#define)
 - [externals](#externals)
 - [extensions](#extensions)
+- [alias](#alias)
 - [copy](#copy)
 - [browserslist](#browserslist)
 - [devServer](#devServer)
@@ -195,7 +194,7 @@ outputPath: 'dist'
 
 ```javascript
 zip: {
-  path: '../build',
+  path: '../build', // output.publicPath 的相对路径
   filename: 'project.zip'
 }
 ```
@@ -292,6 +291,7 @@ image: {
 ```javascript
 image: {
   outputPath: 'res/i', // 图片输出地址，默认 images
+  name: '[name].[hash:8].[ext]', // 文件名
   limit: 1024*8 // 8kb内的图片转为base64
 }
 ```
@@ -471,17 +471,24 @@ proxy: {
 
 
 
-## 如何兼容IE9/10/11
+## 如何兼容IE
 
-1. 入口文件最顶部，引入 `@babel/polyfill`
+> IE9/10/11
+
+1. 入口文件顶部，引入 `@babel/polyfill`
 2. `doly.config.js` 关闭开发服务的模块热替换，需手动刷新浏览器。建议在测试IE兼容时再关闭
 3. `doly.config.js` 配置 `browserslist`
 
-安装 `polyfill`，并在入口文件 `app.js` 顶部引入
+安装 `@babel/polyfill`
+
+```shell
+npm install @babel/polyfill --save
+```
+
+在入口文件 `app.js` 顶部引入
 
 ```javascript
 import '@babel/polyfill'
-...
 ```
 
 `doly.config.js` 配置：
