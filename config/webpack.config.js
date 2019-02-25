@@ -11,7 +11,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ZipPlugin = require('zip-webpack-plugin');
 const isPlainObject = require('is-plain-object');
 const chalk = require('chalk');
 
@@ -295,12 +294,6 @@ function getWebpackConfig({
     plugins.push(new ProgressBarPlugin({
       format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)' + '\n'
     }));
-    
-    if(isPlainObject(config.zip)){
-      let zipFilename = config.zip.filename;
-      plugins.push(new ZipPlugin(config.zip));
-    }
-
   }else{
     if(isEnabledHot){
       plugins.push(new webpack.HotModuleReplacementPlugin());

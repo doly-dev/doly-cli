@@ -17,11 +17,15 @@ module.exports = {
   //   attr: 'g'
   // },
 
+  // 构建完成后，输出zip包
+  // zip: 'build/simple.zip',
+
   define: {
     APIURL: 'https://dev.example.com/'
   },
 
   env: {
+    // 生产环境配置
     production: {
       publicPath: 'https://img.99bill.com/',
       outputFilename: 'res/j/[name].[hash].js',

@@ -102,7 +102,10 @@ module.exports = function(
 
   // 如果该目录不是空目录，提示
   if(!isEmptyDirectory(appPath)){
-    console.error('Folder is not empty. Please make empty Folder and inside that directory.');
+    console.log();
+    console.error(chalk.red('Please empty folders for this operation or introduced to the project name.'));
+    console.error(chalk.red('请在空文件夹进行该操作 或 传入项目名称。 doly iniy [projectName]'));
+    console.log();
     return;
   }
 

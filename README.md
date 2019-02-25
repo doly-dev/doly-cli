@@ -188,15 +188,12 @@ outputPath: 'dist'
 
 ### zip
 
-配置构建完成后生成的 `zip` 文件，options 将传给 [zip-webpack-plugin](https://www.npmjs.com/package/zip-webpack-plugin)，默认无配置。
+配置构建完成后生成 `zip` 文件，相对于当前项目根目录
 
 示例：
 
 ```javascript
-zip: {
-  path: '../build', // output.publicPath 的相对路径
-  filename: 'project.zip'
-}
+zip: 'build/project.zip'
 ```
 
 ### outputFilename

@@ -25,12 +25,16 @@ module.exports = {
   //   attr: 'g'
   // },
 
+  // 构建完成后，输出zip包
+  // zip: 'build/simple.zip',
+
   // 通过 webpack 的 DefinePlugin 传递给代码，值会自动做 JSON.stringify 处理。
   define: {
     APIURL: 'https://dev.example.com/'
   },
 
   env: {
+    // 生产环境配置
     production: {
       APIURL: 'https://prod.example.com/'
     }

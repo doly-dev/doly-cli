@@ -4,5 +4,5 @@
 .cache
 .browserify
 dist
-Build
+build
 node_modules

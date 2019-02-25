@@ -1,9 +1,14 @@
 
 const webpack = require('webpack');
 const path = require('path');
+const fs = require('fs');
 const rimraf = require('rimraf');
+const chalk = require('chalk');
 const isPlainObject = require('is-plain-object');
 const { printFileSizesAfterBuild } = require('react-dev-utils/FileSizeReporter');
+
+const archiver = require('archiver');
+const mkdirp = require('mkdirp');
 
 const clearConsole = require('./utils/clearConsole');
 const {webpackConfig, webpackDevServerConfig, paths, config: userConfig} = require('./config');
@@ -17,11 +22,6 @@ const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 function build() {
 
   // console.log('building');
-
-  // 删除zip打包文件夹
-  if(isPlainObject(userConfig.zip) && userConfig.zip.path){
-    rimraf.sync(path.resolve(paths.appBuild, userConfig.zip.path));
-  }
 
   // 删除构建文件
   rimraf.sync(paths.appBuild);
@@ -61,6 +61,36 @@ function build() {
       WARN_AFTER_CHUNK_GZIP_SIZE,
     );
     console.log();
+
+    // 标识配置了zip输出目录
+    if(userConfig.zip && typeof userConfig.zip === 'string'){
+      let { dir, ext, name } = path.parse(userConfig.zip);
+
+      // ext = ext || '.zip';
+      ext = '.zip'; // 强制写死
+      name = name || 'build';
+
+      // 相对与当前项目根目录的绝对路径
+      let zipAbsPath = path.join(process.cwd(), dir);
+
+      mkdirp(zipAbsPath, function (err) {
+        if (err) console.error(err);
+      });
+
+      let output = fs.createWriteStream(zipAbsPath + '/' + name + ext);
+      let archive = archiver('zip', {
+        zlib: { level: 9 } // Sets the compression level.
+      });
+
+      archive.pipe(output);
+
+      archive.directory(userConfig.outputPath + '/', name);
+
+      archive.finalize();
+
+      console.log('Zip file: ' + chalk.yellow(zipAbsPath + '/' + name + ext));
+      console.log();
+    }
 
   });
 }
