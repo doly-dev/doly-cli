@@ -36,7 +36,9 @@ module.exports = {
   env: {
     // 生产环境配置
     production: {
-      APIURL: 'https://prod.example.com/'
+      define: {
+        APIURL: 'https://prod.example.com/'
+      }
     }
   }
 }
