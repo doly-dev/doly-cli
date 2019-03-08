@@ -24,7 +24,7 @@ function findNpm() {
 
     }
   }
-  throw new Error('please install npm');
+  throw new Error('Please install npm');
 }
 
 function isDirectory(directoryName) {
@@ -104,7 +104,7 @@ module.exports = function(
   if(!isEmptyDirectory(appPath)){
     console.log();
     console.error(chalk.red('Please empty folders for this operation or introduced to the project name.'));
-    console.error(chalk.red('请在空文件夹进行该操作 或 传入项目名称。 doly iniy [projectName]'));
+    console.error(chalk.red('请在空文件夹进行该操作 或 传入项目名称。 doly init [projectName]'));
     console.log();
     return;
   }
