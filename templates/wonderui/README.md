@@ -16,6 +16,7 @@
 - [使用public目录](#使用public目录)
 - [不同环境配置](#不同环境配置)
 - [配置](#配置)
+- [扩展配置](#扩展配置)
 - [如何兼容IE9/10/11](#如何兼容IE)
 
 ## 快速开始
@@ -467,6 +468,65 @@ proxy: {
 打包使用 `doly build [env]`，`env` 默认 production。
 
 
+## 扩展配置
+
+扩展配置一样是在 `doly.config.js` 中进行配置， 如果有依赖扩展插件，需在项目安装插件
+
+### extraBabelPlugins
+
+扩展 `babel-loader` 的 `plugins`
+
+**示例**
+
+> 项目中只引入 `antd-mobile` 某个组件，可扩展 `babel-plugin-import` 插件。
+
+- 安装 `babel-plugin-import`
+
+```shell
+npm install babel-plugin-import --save-dev
+```
+
+- `doly.config.js` 中配置
+
+```javascript
+extraBabelPlugins: [['import', { libraryName: 'antd-mobile', style: true }]]
+```
+
+然后只需从 antd-mobile 引入模块即可，无需单独引入样式。
+
+```javascript
+// babel-plugin-import 会帮助你加载 JS 和 CSS
+import { DatePicker } from 'antd-mobile';
+```
+
+### extraBabelPresets
+
+扩展 `babel-loader` 的 `presets`
+
+### extraPostCSSPlugins
+
+扩展 `postcss-loader` 的 `plugins`
+
+**示例**
+
+```shell
+npm install postcss-pxtorem --save-dev
+```
+
+```javascript
+extraPostCSSPlugins: [
+    require('postcss-pxtorem')({
+      rootValue: 75,
+      unitPrecision: 5,
+      propList: ['*', '!border*'],
+      selectorBlackList: [],
+      replace: true,
+      mediaQuery: false,
+      minPixelValue: 12
+    })
+  ]
+```
+
 
 ## 如何兼容IE
 
@@ -493,11 +553,6 @@ import '@babel/polyfill'
 ```javascript
 devServer: {
   hot: false
-},
-browserslist: {
-  'last 2 versions',
-  '>1%',
-  'not ie <=8'
 }
 ```
 
