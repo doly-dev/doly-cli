@@ -96,7 +96,8 @@ function getWebpackConfig({
                 "browsers": config.browserslist
               }
             }], 
-            require.resolve("@babel/preset-react")
+            require.resolve("@babel/preset-react"),
+            ...(config.extraBabelPresets || []),
           ],
           plugins: [
             require.resolve('@babel/plugin-syntax-dynamic-import'),
@@ -130,6 +131,8 @@ function getWebpackConfig({
             require.resolve('@babel/plugin-proposal-do-expressions'),
             require.resolve('@babel/plugin-proposal-function-bind'),
             require.resolve('babel-plugin-macros'),
+
+            ...(config.extraBabelPlugins || []),
 
             [
               require.resolve('babel-plugin-named-asset-import'),
