@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import ReactDom from 'react-dom';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { HashRouter, Route, Switch, Link } from 'react-router-dom';
 
 import './app.less';
 
@@ -32,19 +32,21 @@ console.log(APIURL);
 class App extends React.Component {
   render() {
     return (
-      <Fragment>
-        <h1>Doly</h1>
-        <Nav
-          navList={pages}
-        />
-        <Switch>
-          {
-            pages.map(page=><Route key={`${page.name}${page.path}`} {...page} />)
-          }
-        </Switch>
-      </Fragment>
+      <HashRouter>
+        <Fragment>
+          <h1>Doly</h1>
+          <Nav
+            navList={pages}
+          />
+          <Switch>
+            {
+              pages.map(page=><Route key={`${page.name}${page.path}`} {...page} />)
+            }
+          </Switch>
+        </Fragment>
+      </HashRouter>
     );
   }
 }
 
-ReactDom.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
+ReactDom.render(<App />, document.getElementById('root'));

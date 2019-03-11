@@ -94,7 +94,8 @@ function getWebpackConfig({
       options: {
         ident: 'postcss',
         plugins: [
-          require('autoprefixer')({browsers: config.browserslist})
+          require('postcss-flexbugs-fixes'), // eslint-disable-line
+          require('autoprefixer')({browsers: config.browserslist, flexbox: 'no-2009'})
         ]
       }
     };
@@ -117,6 +118,25 @@ function getWebpackConfig({
       include: paths.appSrc
     };
 
+    const cssInNodeModulesRule = {
+      test: /\.css$/,
+      use: [
+        'css-loader',
+        postcssLoader
+      ],
+      include: paths.appNodeModules
+    };
+
+    const lessInNodeModulesRule = {
+      test: /\.lessm?$/,
+      use: [
+        'css-loader',
+        postcssLoader,
+        'less-loader'
+      ],
+      include: paths.appNodeModules
+    };
+
     if(!config.cssInline && !isDevWithServer){
       cssRule.use.unshift(MiniCssExtractPlugin.loader);
       lessRule.use.unshift(MiniCssExtractPlugin.loader);
@@ -125,7 +145,7 @@ function getWebpackConfig({
       lessRule.use.unshift('style-loader');
     }
 
-    return [cssRule, lessRule];
+    return [cssRule, lessRule, cssInNodeModulesRule, lessInNodeModulesRule];
   }
 
   const jsRule = {
@@ -346,15 +366,10 @@ function getWebpackConfig({
   }
 
   // 热更新(HMR)不能和[chunkhash]同时使用。
-  const jsFileHash = config.hash ? '.[chunkhash:8]':'';
+  const jsFileHash = config.hash && !isDevWithServer ? '.[chunkhash:8]':'';
 
   let jsFilename = config.outputFilename ? config.outputFilename : `[name]${jsFileHash}.js`;
   let jsChunkFilename = config.outputChunkFilename ? config.outputChunkFilename : `[name]${jsFileHash}.chunk.js`;
-
-  if(isDevWithServer){
-    jsFilename = '[name].js';
-    jsChunkFilename = '[name].chunk.js';
-  }
 
   const webpackConfig =  {
     mode,
