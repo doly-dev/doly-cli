@@ -494,11 +494,11 @@ import '@babel/polyfill'
 devServer: {
   hot: false
 },
-browserslist: {
+browserslist: [
   'last 2 versions',
   '>1%',
   'not ie <=8'
-}
+]
 ```
 
 
