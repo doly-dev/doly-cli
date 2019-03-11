@@ -26,7 +26,7 @@ function dev() {
 
     // console.log(chalk.green('Compiled successfully!'));
 
-    const urls = prepareUrls(PROTOCOL, host, port);
+    const urls = prepareUrls(PROTOCOL, host, innerPort);
     let isFirstCompile = true;
 
     compiler.hooks.done.tap('doly dev', stats => {
@@ -78,7 +78,7 @@ function dev() {
 
     let configFailed = false;
 
-    server.listen(port, host, err => {
+    server.listen(innerPort, host, err => {
       if (err) {
         console.log(err);
         return;

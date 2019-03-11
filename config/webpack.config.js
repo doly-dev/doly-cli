@@ -15,6 +15,7 @@ const isPlainObject = require('is-plain-object');
 const chalk = require('chalk');
 
 const getConfigEntry = require('./getConfigEntry');
+const normalizeTheme = require('./normalizeTheme');
 
 function getWebpackConfig({
   config={}, 
@@ -80,13 +81,16 @@ function getWebpackConfig({
 
   // css转换规则
   const cssRules = function () {
+    const theme = normalizeTheme(config.theme);
+
     const cssLoader = {
       loader: 'css-loader',
       options: {
         modules: !config.disableCSSModules,
         importLoaders: 1,
         localIdentName: '[name]_[local]_[hash:base64:5]',
-        sourceMap: !config.disableCSSSourceMap
+        sourceMap: !config.disableCSSSourceMap,
+        ...(config.cssLoaderOptions || {}),
       }
     };
     const postcssLoader = {
@@ -95,27 +99,57 @@ function getWebpackConfig({
         ident: 'postcss',
         plugins: [
           require('postcss-flexbugs-fixes'), // eslint-disable-line
-          require('autoprefixer')({browsers: config.browserslist, flexbox: 'no-2009'})
+          require('autoprefixer')({browsers: config.browserslist, flexbox: 'no-2009'}),
+          ...(config.extraPostCSSPlugins ? config.extraPostCSSPlugins : []),
         ]
       }
     };
+    const lessLoader = {
+      loader: 'less-loader',
+      options: {
+        modifyVars: theme,
+        javascriptEnabled: true,
+        ...(config.lessLoaderOptions || {}),
+      }
+    }
+
+    function cssExclude(filePath) {
+      if (/node_modules/.test(filePath)) {
+        return true;
+      }
+      if (config.cssModulesWithAffix) {
+        if (/\.module\.(css|less)$/.test(filePath)) return true;
+      }
+      if (config.cssModulesExcludes) {
+        for (const exclude of config.cssModulesExcludes) {
+          // if (filePath.indexOf(exclude) > -1) return true;
+          if (exclude instanceof RegExp) {
+            return exclude.test(filePath);
+          } else {
+            return filePath.indexOf(exclude) > -1;
+          }
+        }
+      }
+      return false;
+    }
+
     const cssRule = {
       test: /\.css$/,
       use: [
         cssLoader,
         postcssLoader
       ],
-      include: paths.appSrc
+      exclude: cssExclude
     };
 
     const lessRule = {
-      test: /\.lessm?$/,
+      test: /\.less$/,
       use: [
         cssLoader, 
         postcssLoader,
-        'less-loader'
+        lessLoader
       ],
-      include: paths.appSrc
+      exclude: cssExclude
     };
 
     const cssInNodeModulesRule = {
@@ -128,14 +162,53 @@ function getWebpackConfig({
     };
 
     const lessInNodeModulesRule = {
-      test: /\.lessm?$/,
+      test: /\.less$/,
       use: [
         'css-loader',
         postcssLoader,
-        'less-loader'
+        lessLoader
       ],
       include: paths.appNodeModules
     };
+
+    let affixCssModulesRules = [];
+
+    if (config.cssModulesWithAffix) {
+      affixCssModulesRule.push({
+        test: /\.module\.css$/,
+        use: [
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              localIdentName: '[name]_[local]_[hash:base64:5]',
+              sourceMap: !config.disableCSSSourceMap,
+              ...(config.cssLoaderOptions || {}),
+              modules: true,
+
+            }
+          },
+          postcssLoader
+        ]
+      });
+      affixCssModulesRule.push({
+        test: /\.module\.less$/,
+        use: [
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              localIdentName: '[name]_[local]_[hash:base64:5]',
+              sourceMap: !config.disableCSSSourceMap,
+              ...(config.cssLoaderOptions || {}),
+              modules: true,
+
+            }
+          },
+          postcssLoader
+        ]
+      });
+    }
 
     if(!config.cssInline && !isDevWithServer){
       cssRule.use.unshift(MiniCssExtractPlugin.loader);
@@ -145,7 +218,7 @@ function getWebpackConfig({
       lessRule.use.unshift('style-loader');
     }
 
-    return [cssRule, lessRule, cssInNodeModulesRule, lessInNodeModulesRule];
+    return [cssRule, lessRule, cssInNodeModulesRule, lessInNodeModulesRule, ...affixCssModulesRules];
   }
 
   const jsRule = {

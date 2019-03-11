@@ -92,12 +92,10 @@ module.exports = {
 
   // 配置 browserslist，同时作用于 babel-preset-env 和 autoprefixer。
   browserslist: [
-    // "defaults",
-    // "not ie < 11",
-    "last 2 versions",
-    "> 1%",
-    // "iOS 7",
-    // "last 3 iOS versions"
+    '> 1%',
+    'last 4 versions',
+    'Firefox ESR',
+    'not ie < 9', // React doesn't support IE8 anyway
   ],
 
   // 配置 webpack 的 optimization。默认配置minimize/minimizer，配置之后会进行合并。

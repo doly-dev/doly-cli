@@ -84,7 +84,7 @@ function build() {
 
       archive.pipe(output);
 
-      archive.directory(userConfig.outputPath + '/', name);
+      archive.directory(userConfig.outputPath + '/', false);
 
       archive.finalize();
 
