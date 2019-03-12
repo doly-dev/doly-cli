@@ -19,21 +19,6 @@ module.exports = function (config={}, paths={}) {
     localIdentName: cssOptions.localIdentName || '[name]_[local]_[hash:base64:5]',
   }
 
-  const postcssOptions = {
-    ident: 'postcss',
-    plugins: [
-      require('postcss-flexbugs-fixes'), // eslint-disable-line
-      require('autoprefixer')({browsers: config.browserslist, flexbox: 'no-2009'}),
-      ...(config.extraPostCSSPlugins ? config.extraPostCSSPlugins : []),
-    ]
-  }
-
-  const lessOptions = {
-    modifyVars: theme,
-    javascriptEnabled: true,
-    ...(config.lessLoaderOptions || {}),
-  };
-
   function createCSSLoader(cssModules) {
     return {
       loader: 'css-loader',
@@ -48,6 +33,7 @@ module.exports = function (config={}, paths={}) {
     loader: 'postcss-loader',
     options: {
       ident: 'postcss',
+      sourceMap: !config.disableCSSSourceMap,
       plugins: [
         require('postcss-flexbugs-fixes'), // eslint-disable-line
         require('autoprefixer')({browsers: config.browserslist, flexbox: 'no-2009'}),
@@ -61,6 +47,7 @@ module.exports = function (config={}, paths={}) {
     options: {
       modifyVars: theme,
       javascriptEnabled: true,
+      sourceMap: !config.disableCSSSourceMap,
       ...(config.lessLoaderOptions || {}),
     }
   }
