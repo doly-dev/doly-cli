@@ -62,7 +62,6 @@ function dev() {
       if (isFirstCompile) {
         isFirstCompile = false;
         openBrowser(urls.localUrlForBrowser);
-        // send({ type: DONE });
       }
     });
 

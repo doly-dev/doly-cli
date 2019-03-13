@@ -73,7 +73,7 @@ function getWebpackConfig({
         parallel: true,
         // Enable file caching
         cache: true,
-        sourceMap: !isProd,
+        sourceMap: !isDevWithServer && isProd,
       }),
       new OptimizeCSSAssetsPlugin({})
     ]
@@ -94,7 +94,8 @@ function getWebpackConfig({
             [require.resolve("@babel/preset-env"), {
               targets: {
                 "browsers": config.browserslist
-              }
+              },
+              exclude: ['transform-typeof-symbol'],
             }], 
             require.resolve("@babel/preset-react"),
             ...(config.extraBabelPresets || []),
@@ -163,6 +164,7 @@ function getWebpackConfig({
                 )
               },
             ],
+            // require.resolve('babel-plugin-dynamic-import-node')
           ]
         }
       },
