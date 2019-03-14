@@ -12,6 +12,7 @@ const isInteractive = process.stdout.isTTY;
 const PROTOCOL = 'http';
 
 let isRestart = false;
+let isFirstCompile = true;
 
 function dev() {
 
@@ -26,13 +27,12 @@ function dev() {
     const compiler = webpack(webpackConfig);
 
     const urls = prepareUrls(PROTOCOL, host, innerPort);
-    let isFirstCompile = true;
 
     compiler.hooks.watchRun.tap('dev-server', ()=>{
-      if(isInteractive && isFirstCompile){
+      if(isInteractive && isFirstCompile && !isRestart){
         clearConsole();
       }
-      
+
       if(isRestart){
         info(`Configuration changes, restart server...\n`);
       }else if(isFirstCompile){
@@ -41,6 +41,7 @@ function dev() {
     });
 
     compiler.hooks.done.tap('doly dev', stats => {
+
       if (stats.hasErrors()) {
         // make sound
         // ref: https://github.com/JannesMeyer/system-bell-webpack-plugin/blob/bb35caf/SystemBellPlugin.js#L14
@@ -56,7 +57,6 @@ function dev() {
       }
 
       if (isFirstCompile && !isRestart) {
-          // console.log();
           console.log(
             [
               `  App running at:`,
@@ -67,9 +67,16 @@ function dev() {
           console.log();
       }
 
+      if(isFirstCompile || isRestart){
+        openBrowser(urls.localUrlForBrowser);
+      }
+
+      if(isRestart){
+        isRestart = false;
+      }
+
       if (isFirstCompile) {
         isFirstCompile = false;
-        openBrowser(urls.localUrlForBrowser);
       }
     });
 

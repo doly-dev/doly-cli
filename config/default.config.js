@@ -10,11 +10,8 @@ module.exports = {
   // 配置 webpack 的 output.publicPath 属性。
   outputPath: 'dist',
   
-  // 配置 zip。参考：https://www.npmjs.com/package/zip-webpack-plugin
-  // zip: {
-  //   path: '../build',
-  //   filename: 'doly-cli-project.zip'
-  // },
+  // 配置构建完成后生成 `zip` 文件，相对于当前项目根目录
+  // zip: 'build/project.zip',
 
   // 配置 webpack 的 output.filename 属性
   // outputFilename: 'res/j/[name].[hash].js',

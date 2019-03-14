@@ -1,5 +1,5 @@
 {
-  "name": "doly-scaffold",
+  "name": "doly-scaffold-wonderui",
   "version": "1.0.0",
   "description": "build with cue-cli",
   "scripts": {
@@ -15,5 +15,8 @@
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "wonder-ui": "^0.3.7"
+  },
+  "devDependencies": {
+    "doly-cli": "^0.1.14"
   }
 }
