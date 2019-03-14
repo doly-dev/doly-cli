@@ -48,7 +48,7 @@ function dev() {
       }
 
       if (isFirstCompile && !isRestart) {
-          console.log();
+          // console.log();
           console.log(
             [
               `  App running at:`,
@@ -85,12 +85,12 @@ function dev() {
       if (isInteractive) {
         clearConsole();
       }
-      
-      if(isRestart){
-        console.log(chalk.green(`Configuration changes, restart server...`));
-      }else{
-        console.log(chalk.cyan('Starting the development server...\n'));
-      }
+
+      // if(isRestart){
+      //   console.log(chalk.green(`Configuration changes, restart server...`));
+      // }else{
+      //   console.log(chalk.cyan('Starting the development server...\n'));
+      // }
 
       afterServer();
     });

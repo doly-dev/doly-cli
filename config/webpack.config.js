@@ -246,14 +246,13 @@ function getWebpackConfig({
     plugins.push(new ManifestPlugin(config.manifest));
   }
 
-  if(!isDevWithServer){
-    plugins.push(new ProgressBarPlugin({
-      format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)' + '\n'
-    }));
-  }else{
-    if(isEnabledHot){
-      plugins.push(new webpack.HotModuleReplacementPlugin());
-    }
+  plugins.push(new ProgressBarPlugin({
+    format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
+    clear: true
+  }));
+
+  if(isDevWithServer && isEnabledHot){
+    plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
   if(config.ignoreMomentLocale){
