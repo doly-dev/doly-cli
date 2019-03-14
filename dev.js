@@ -6,6 +6,7 @@ const clearConsole = require('./utils/clearConsole');
 const choosePort = require('./utils/choosePort');
 
 const prepareUrls = require('./utils/prepareUrls');
+const { success, info, error } = require('./utils/log');
 
 const isInteractive = process.stdout.isTTY;
 const PROTOCOL = 'http';
@@ -24,15 +25,22 @@ function dev() {
 
     const compiler = webpack(webpackConfig);
 
-    // console.log(chalk.green('Compiled successfully!'));
-
     const urls = prepareUrls(PROTOCOL, host, innerPort);
     let isFirstCompile = true;
 
+    compiler.hooks.watchRun.tap('dev-server', ()=>{
+      if(isInteractive && isFirstCompile){
+        clearConsole();
+      }
+      
+      if(isRestart){
+        info(`Configuration changes, restart server...\n`);
+      }else if(isFirstCompile){
+        info('Starting the development server...\n');
+      }
+    });
+
     compiler.hooks.done.tap('doly dev', stats => {
-  // console.log('hooks done.');
-  // console.log(stats.compilation.errors);
-  // console.log(stats.hasErrors());
       if (stats.hasErrors()) {
         // make sound
         // ref: https://github.com/JannesMeyer/system-bell-webpack-plugin/blob/bb35caf/SystemBellPlugin.js#L14
@@ -41,7 +49,7 @@ function dev() {
         }
         
         if(stats.compilation && stats.compilation.errors && stats.compilation.errors.length > 0){
-          console.error(stats.compilation.errors[0]);
+          error(stats.compilation.errors[0]);
         }
 
         return;
@@ -82,15 +90,6 @@ function dev() {
         console.log(err);
         return;
       }
-      if (isInteractive) {
-        clearConsole();
-      }
-
-      // if(isRestart){
-      //   console.log(chalk.green(`Configuration changes, restart server...`));
-      // }else{
-      //   console.log(chalk.cyan('Starting the development server...\n'));
-      // }
 
       afterServer();
     });
