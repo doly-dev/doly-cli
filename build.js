@@ -6,6 +6,7 @@ const rimraf = require('rimraf');
 const chalk = require('chalk');
 const isPlainObject = require('is-plain-object');
 const { printFileSizesAfterBuild } = require('react-dev-utils/FileSizeReporter');
+const { success, info, error } = require('./utils/log');
 
 const archiver = require('archiver');
 const mkdirp = require('mkdirp');
@@ -13,7 +14,7 @@ const mkdirp = require('mkdirp');
 const clearConsole = require('./utils/clearConsole');
 const {webpackConfig, webpackDevServerConfig, paths, config: userConfig} = require('./config');
 
-const isInteractive = process.stdout.isTTY;
+// const isInteractive = process.stdout.isTTY;
 
 // These sizes are pretty large. We'll warn for bundles exceeding them.
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
@@ -30,16 +31,16 @@ function build() {
 
   compiler.run((err, stats)=>{
 
-    if(isInteractive){
-      clearConsole();
-    }
+    // if(isInteractive){
+    //   clearConsole();
+    // }
 
     if (err || stats.hasErrors()) {
-      console.log('build failed!');
+      // console.log('build failed!');
       if(err){
-        console.error(err);
+        error(err);
       }else if(stats.compilation && stats.compilation.errors && stats.compilation.errors.length > 0){
-        console.error(stats.compilation.errors[0]);
+        error(stats.compilation.errors[0]);
       }
       
       process.exit(1);
@@ -49,7 +50,7 @@ function build() {
     //   console.log('build done');
     // }
 
-    console.log('File sizes after gzip:\n');
+    info('File sizes after gzip:\n');
     printFileSizesAfterBuild(
       stats,
       {
@@ -74,7 +75,7 @@ function build() {
       let zipAbsPath = path.join(process.cwd(), dir);
 
       mkdirp(zipAbsPath, function (err) {
-        if (err) console.error(err);
+        if (err) error(err);
       });
 
       let output = fs.createWriteStream(zipAbsPath + '/' + name + ext);
