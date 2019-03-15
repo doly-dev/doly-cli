@@ -340,7 +340,7 @@ function getWebpackConfig({
       rules: [
         ...cssRules(config, paths),
         {
-          test: /\.(jpe?g|png|gif|svg|eot|ttf|woff)$/,
+          test: /\.(jpe?g|png|gif|svg|eot|ttf|woff)$/i,
           use: [
             {
               loader: 'url-loader',
