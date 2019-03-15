@@ -13,16 +13,32 @@ const PROTOCOL = 'http';
 
 let isRestart = false;
 let isFirstCompile = true;
+let cachePort = '';
+
+// fix 端口号冲突的情况下，每次都走 choose port 问题
+function wrapChoosePort(port) {
+  return new Promise(resolve=>{
+    if(isRestart && cachePort){
+      resolve(cachePort);
+    }else{
+      choosePort(port).then(innerPort=>{
+        resolve(innerPort);
+      })
+    }
+  })
+}
 
 function dev() {
 
   const { webpackConfig, webpackDevServerConfig, watchConfigs, unwatchConfigs } = require('./config');
   const { port, host } = webpackDevServerConfig;
 
-  choosePort(port).then(innerPort=>{
+  wrapChoosePort(port).then(innerPort=>{
     if (innerPort === null) {
       return;
     }
+
+    cachePort = innerPort;
 
     const compiler = webpack(webpackConfig);
 
@@ -80,7 +96,7 @@ function dev() {
       }
     });
 
-    const server = new WebpackDevServer(compiler, webpackDevServerConfig);
+    const server = new WebpackDevServer(compiler, { ...webpackDevServerConfig, port: innerPort });
 
     ['SIGINT', 'SIGTERM'].forEach(signal => {
       process.on(signal, () => {
