@@ -26,7 +26,7 @@ const pages = [
 ];
 
 // eslint-disable-next-line
-console.log(APIURL);
+// console.log(APIURL);
 
 // eslint-disable-next-line
 class App extends React.Component {
@@ -50,3 +50,7 @@ class App extends React.Component {
 }
 
 ReactDom.render(<App />, document.getElementById('root'));
+
+if (module.hot) {
+  module.hot.accept();
+}

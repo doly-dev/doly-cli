@@ -20,6 +20,8 @@ module.exports = {
   // 构建完成后，输出zip包
   // zip: 'build/simple.zip',
 
+  cssInline: false,
+
   define: {
     APIURL: 'https://dev.example.com/'
   },
@@ -35,7 +37,8 @@ module.exports = {
       },
       cssInline: false,
       css: {
-        filename: 'res/c/[name].[contenthash:8].css'
+        filename: 'res/c/[name].[contenthash:8].css',
+        chunkFilename: 'res/c/[name].[contenthash:8].css',
       },
       image: {
         outputPath: 'res/i', // 图片输出地址，默认 images

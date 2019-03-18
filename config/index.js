@@ -13,7 +13,7 @@ let webpackDevServerConfig = null;
 
 const USER_CONFIGS = 'USER_CONFIGS';
 
-function reloadConfig() {
+function loadConfig() {
   config = getConfig();
 // console.log('reload config ', config);
   paths = getPaths({
@@ -31,7 +31,11 @@ function reloadConfig() {
   });
 }
 
-reloadConfig();
+loadConfig();
+
+function reloadConfig() {
+  loadConfig();
+}
 
 function watchConfigs(opts = {}) {
   const { configFile = CONFIGFILE } = opts;

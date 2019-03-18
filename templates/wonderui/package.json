@@ -1,7 +1,7 @@
 {
   "name": "doly-scaffold-wonderui",
   "version": "1.0.0",
-  "description": "build with cue-cli",
+  "description": "build with doly-cli",
   "scripts": {
     "start": "doly dev",
     "build": "doly build"
@@ -14,9 +14,9 @@
     "mobx-react": "^5.3.6",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "wonder-ui": "^0.3.7"
+    "wonder-ui": "^0.3.8"
   },
   "devDependencies": {
-    "doly-cli": "^0.1.16"
+    "doly-cli": "^0.2.0"
   }
 }

@@ -34,3 +34,7 @@ class App extends Component {
 }
 
 render(<App/>, document.querySelector('.root'));
+
+if (module.hot) {
+  module.hot.accept();
+}

@@ -297,7 +297,7 @@ function getWebpackConfig({
   }
 
   const genOptimization = function (opts) {
-    return Object.assign({}, defaultOptimization, opts);
+    return Object.assign({}, defaultOptimization, isPlainObject(opts) ? opts : {});
   }
 
   // 热更新(HMR)不能和[chunkhash]同时使用。
@@ -315,7 +315,7 @@ function getWebpackConfig({
       filename: jsFilename,
       chunkFilename: jsChunkFilename
     },
-    optimization: genOptimization(),
+    optimization: genOptimization(config.optimization),
     resolve: {
       modules: [paths.appNodeModules, paths.ownNodeModules],
       extensions: [

@@ -16,6 +16,6 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "doly-cli": "^0.1.16"
+    "doly-cli": "^0.2.0"
   }
 }

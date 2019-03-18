@@ -1,6 +1,7 @@
 const isPlainObject = require('is-plain-object');
-const apiMocker = require('mocker-api');
 const { existsSync } = require('fs');
+
+const apiMocker = require('../mocker-api');
 
 module.exports = function ({
   config={}, 
@@ -27,7 +28,7 @@ module.exports = function ({
     watchOptions: {
       ignored: /node_modules/,
     },
-    historyApiFallback: true,
+    historyApiFallback: false,
     overlay: true
   }
 

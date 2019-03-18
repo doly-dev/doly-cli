@@ -1,4 +1,4 @@
-const delay = require('./_delay');
+const delay = require('doly-cli/mocker-api/delay');
 
 const noProxy = process.env.NO_PROXY === 'true';
 
