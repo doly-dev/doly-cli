@@ -175,7 +175,7 @@ function getWebpackConfig({
 
   if(config.replace){
     jsRule.use.push({
-      loader: 'webpack-replace-loader',
+      loader: 'string-replace-loader',
       options: config.replace
     });
   }
@@ -349,15 +349,14 @@ function getWebpackConfig({
           ],
           include: paths.appSrc
         },
-        // {
-        //   test: /\.(eot|ttf|woff|svg)$/,
-        //   use: 'file-loader',
-        //   include: paths.appSrc
-        // },
         {
-          test: /\.(htm|html)$/,
-          use: 'html-withimg-loader',
-          include: paths.appSrc
+          test: /\.(html)$/,
+          use: {
+            loader: 'html-loader',
+            options: {
+              attrs: ['img:src']
+            }
+          }
         },
         jsRule
       ]
@@ -386,6 +385,22 @@ function getWebpackConfig({
   if(config.alias){
     webpackConfig.resolve.alias = config.alias;
   }
+  
+  // 默认在entry中插入 模块热替换 代码
+  // if(isEnabledHot){
+
+  //   webpackConfig.module.rules.push({
+  //     // test: /\.(js|jsx)$/,
+  //     test: paths.resolveApp(config.entry),
+  //     // exclude: /(node_modules|bower_components)/,
+  //     // include: paths.appSrc,
+  //     enforce: 'post',
+  //     // use: ['webpack-module-hot-accept']
+  //     use: ['hmr-accept-loader']
+  //   });
+
+  //   // console.log(webpackConfig.module.rules);
+  // }
 
   return webpackConfig;
 }

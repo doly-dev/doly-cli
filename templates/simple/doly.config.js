@@ -22,7 +22,7 @@ module.exports = {
   // replace: {
   //   search: '__uri',
   //   replace: 'require',
-  //   attr: 'g'
+  //   flags: 'g'
   // },
 
   // 构建完成后，输出zip包

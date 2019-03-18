@@ -328,7 +328,7 @@ css: {
 
 ### replace
 
-配置 [webpack-replace-loader](https://www.npmjs.com/package/webpack-replace-loader)，替换`js/jsx`中的文本。例如fis的图片资源定位符 `__uri`，资源路径需改为相对路径。
+配置 [string-replace-loader](https://www.npmjs.com/package/string-replace-loader)，替换`js/jsx`中的文本。例如fis的图片资源定位符 `__uri`，资源路径需改为相对路径。
 
 示例：
 
@@ -336,7 +336,7 @@ css: {
 replace: {
   search: '__uri',
   replace: 'require',
-  attr: 'g'
+  flags: 'g'
 },
 ```
 
