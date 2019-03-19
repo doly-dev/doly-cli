@@ -387,20 +387,18 @@ function getWebpackConfig({
   }
   
   // 默认在entry中插入 模块热替换 代码
-  // if(isEnabledHot){
+  if(isEnabledHot){
+    webpackConfig.module.rules.push({
+      test: /\.(js|jsx)$/,
+      exclude: /(node_modules|bower_components)/,
+      enforce: 'post',
+      use: [
+        {loader: paths.resolveOwn('utils/hmr-loader')}
+      ]
+    });
 
-  //   webpackConfig.module.rules.push({
-  //     // test: /\.(js|jsx)$/,
-  //     test: paths.resolveApp(config.entry),
-  //     // exclude: /(node_modules|bower_components)/,
-  //     // include: paths.appSrc,
-  //     enforce: 'post',
-  //     // use: ['webpack-module-hot-accept']
-  //     use: ['hmr-accept-loader']
-  //   });
-
-  //   // console.log(webpackConfig.module.rules);
-  // }
+    // console.log(webpackConfig.module.rules);
+  }
 
   return webpackConfig;
 }

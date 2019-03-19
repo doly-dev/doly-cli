@@ -50,7 +50,3 @@ class App extends React.Component {
 }
 
 ReactDom.render(<App />, document.getElementById('root'));
-
-if (module.hot) {
-  module.hot.accept();
-}
