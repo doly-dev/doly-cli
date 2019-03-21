@@ -42,7 +42,7 @@ module.exports = function(source, map, meta) {
     if(_.includes(entry, rawRequest)){
       source = injectText(source);
     }
-    this.callback(null, source);
+    this.callback(null, source, map, meta);
   })
 
 };
