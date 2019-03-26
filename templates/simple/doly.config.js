@@ -30,7 +30,7 @@ module.exports = {
 
   // 通过 webpack 的 DefinePlugin 传递给代码，值会自动做 JSON.stringify 处理。
   define: {
-    APIURL: 'https://dev.example.com/'
+    APIURL: '/'
   },
 
   env: {

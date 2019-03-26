@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // eslint-disable-next-line
-const baseUrl = location.port === '9000' ? '/' : APIURL;
+const baseUrl = APIURL;
 
 const ajax = (url, options) => {
   if(!url){

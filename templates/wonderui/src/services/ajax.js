@@ -3,7 +3,7 @@ import axios from 'axios';
 import { showPreloader, hidePreloader } from 'wonder-ui/Preloader';
 
 // eslint-disable-next-line
-const baseUrl = location.port === '9000' ? '/' : APIURL;
+const baseUrl = APIURL;
 
 const ajax = (url, options) => {
   if(!url){
@@ -37,7 +37,7 @@ const ajax = (url, options) => {
 
     return res.data;
   }).catch(err=>{
-    // do something  
+    // do something
     // Dialog.toast('请求失败'); //全局错误提示
 
     return err;

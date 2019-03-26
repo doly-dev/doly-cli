@@ -23,7 +23,7 @@ module.exports = {
   cssInline: false,
 
   define: {
-    APIURL: 'https://dev.example.com/'
+    APIURL: '/'
   },
 
   env: {

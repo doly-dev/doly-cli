@@ -14,7 +14,7 @@
     "mobx-react": "^5.3.6",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "wonder-ui": "^0.3.8"
+    "wonder-ui": "^0.3.9"
   },
   "devDependencies": {
     "doly-cli": "^0.3.1"
