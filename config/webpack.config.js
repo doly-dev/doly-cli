@@ -214,8 +214,8 @@ function getWebpackConfig({
     }))
   })
 
-  if(!config.cssInline && !isDevWithServer){
-    let hash = config.hash ? '.[contenthash:8]' : '';
+  if(!config.cssInline){
+    let hash = config.hash && !isDevWithServer ? '.[contenthash:8]' : '';
     let css = config.css || {};
     let cssFilename = (css.filename && typeof css.filename === 'string') ? css.filename : '';
     let cssChunkFilename = (css.chunkFilename && typeof css.chunkFilename === 'string') ? css.chunkFilename : '';

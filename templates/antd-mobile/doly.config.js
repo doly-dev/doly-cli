@@ -34,10 +34,8 @@ module.exports = {
     limit: 1024*8 // 小于该大小的图片转为base64
   },
 
-  cssInline: false,
-
   css: {
-    filename: '/assets/css/[name].[contenthash:8].css'
+    filename: 'assets/css/[name].css'
   },
 
   browserslist: [

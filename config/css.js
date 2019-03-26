@@ -168,11 +168,21 @@ module.exports = function (config={}, paths={}) {
   }
 
   return [cssRule, lessRule, cssInNodeModulesRule, lessInNodeModulesRule, ...affixCssModulesRules, ...cssModulesExcludesRules].map(rule=>{
-    if(!config.cssInline && !isDevWithServer){
-      rule.use.unshift(MiniCssExtractPlugin.loader);
-    }else{
+    if(config.cssInline){
       rule.use.unshift('style-loader');
+    }else{
+      rule.use.unshift(MiniCssExtractPlugin.loader);
+
+      if(isDevWithServer){
+        rule.use.unshift({
+          loader: 'css-hot-loader',
+          options: {
+            reloadAll: true,
+          }
+        });
+      }
     }
+
     return rule;
   });
 }

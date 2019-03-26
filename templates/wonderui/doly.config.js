@@ -20,8 +20,6 @@ module.exports = {
   // 构建完成后，输出zip包
   // zip: 'build/simple.zip',
 
-  cssInline: false,
-
   define: {
     APIURL: '/'
   },
@@ -35,7 +33,6 @@ module.exports = {
         template: 'src/default.html', // 指定要打包的html路径和文件名
         filename: 'seashell/webapp/default/test/default.html', // 指定输出路径和文件名
       },
-      cssInline: false,
       css: {
         filename: 'res/c/[name].[contenthash:8].css',
         chunkFilename: 'res/c/[name].[contenthash:8].css',

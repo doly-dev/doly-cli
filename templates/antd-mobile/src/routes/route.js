@@ -6,7 +6,7 @@ import {
   Redirect,
   IndexRoute,
 } from 'react-router-dom';
-import createHashHistory from 'history/createHashHistory';
+import {createHashHistory} from 'history';
 import RouteConfig from './routeConfig';
 
 import Layout from '../components/layout/Layout';

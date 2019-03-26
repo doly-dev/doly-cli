@@ -52,7 +52,7 @@ module.exports = {
   // },
 
   // 样式打包到js中
-  cssInline: true,
+  cssInline: false,
   // 禁用 CSS Modules。
   disableCSSModules: false,
   // 禁用 CSS 的 SourceMap 生成。
@@ -62,7 +62,7 @@ module.exports = {
   // replace: {
   //   search: '__uri',
   //   replace: 'require',
-  //   attr: 'g'
+  //   flags: 'g'
   // },
 
   // 通过 webpack 的 DefinePlugin 传递给代码，值会自动做 JSON.stringify 处理。
@@ -155,6 +155,9 @@ module.exports = {
   // },
 
   // ---------------上面第一个版本实现，以下配置迭代实现---------------
+
+  // image 配置项，待支持 扩展配置、hash等
+  // 所有资源(image/js/css)都单独提炼outputPath属性，区分fileName
 
   // 代码检查，支持本地自定义 .eslintrc，默认使用 airbnb 代码规范
   // eslint: false,
