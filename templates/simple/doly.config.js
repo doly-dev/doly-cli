@@ -1,6 +1,6 @@
 module.exports = {
   // entry: 'src/app.js',
-  // outputPath: 'dist',
+  outputPath: 'dist/v2',
   // outputFilename: 'res/j/[name].[hash].js',
   // publicPath: '/',
   // html: {

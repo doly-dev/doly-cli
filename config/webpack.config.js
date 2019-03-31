@@ -317,7 +317,9 @@ function getWebpackConfig({
     },
     optimization: genOptimization(config.optimization),
     resolve: {
-      modules: [paths.appNodeModules, paths.ownNodeModules],
+      // fix 设置绝对路径导致npm安装的多版本包索引不到的问题
+      // ref: https://webpack.docschina.org/configuration/resolve/#resolve-modules
+      // modules: [paths.appNodeModules, paths.ownNodeModules],
       extensions: [
         'web.mjs',
         'mjs',

@@ -316,7 +316,7 @@ css: {
 
 ### cssInline
 
-样式包含js中，用style进行加载。默认为 `false
+样式包含js中，用style进行加载。默认为 `false`
 
 ### disableCSSModules
 

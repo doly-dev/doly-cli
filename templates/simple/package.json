@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "antd": "^3.15.2",
     "axios": "^0.18.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
@@ -16,6 +17,7 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "doly-cli": "^0.3.3"
+    "babel-plugin-import": "^1.11.0",
+    "doly-cli": "^0.3.4"
   }
 }

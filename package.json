@@ -1,6 +1,6 @@
 {
   "name": "doly-cli",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "A simple CLI for web development",
   "main": "index.js",
   "scripts": {

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { home as homeService } from '../../services';
 
+import { Button } from 'antd';
+
 import styles from './style.less';
 
 // 缓存
@@ -44,7 +46,8 @@ export default class HomePage extends Component {
 
     return (
       <div>
-        <button className={styles.btn} onClick={this.getNotices} disabled={loading}>{loading ? '获取通知中...' : '获取通知列表（mock数据）'}</button>
+        <Button className={styles.btn} onClick={this.getNotices} disabled={loading}>{loading ? '获取通知中...' : '获取通知列表（mock数据）'}</Button>
+        <Button>13245</Button>
         <h2>
           通知列表
           {
