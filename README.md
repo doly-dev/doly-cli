@@ -246,8 +246,10 @@ hash: true
 忽略moment 的 locale 文件,用于减少尺寸。默认：
 
 ```javascript
-ignoreMomentLocale: true
+ignoreMomentLocale: false
 ```
+
+**注意开启后，可能导致antd的日期组件月份显示英文**
 
 ### manifest
 

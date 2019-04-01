@@ -23,7 +23,7 @@ module.exports = {
   hash: true,
 
   // 忽略moment 的 locale 文件,用于减少尺寸
-  ignoreMomentLocale: true,
+  ignoreMomentLocale: false,
 
   // 配置后会生成 manifest.json，option 传给 https://www.npmjs.com/package/webpack-manifest-plugin。
   // manifest: {
