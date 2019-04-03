@@ -7,8 +7,7 @@ module.exports = function ({
   config={}, 
   paths={}
 }) {
-  const { proxy: proxyConfig, mockFile } = config;
-  const serverConfig = config.devServer;
+  const { proxy, mockFile, devServer } = config;
 
   const defaultConfig = {
     contentBase: paths.appBuild,
@@ -29,28 +28,15 @@ module.exports = function ({
       ignored: /node_modules/,
     },
     historyApiFallback: false,
-    overlay: true
+    overlay: true,
+    proxy
   }
 
   if(existsSync(paths.resolveApp(mockFile))){
     defaultConfig.before = (app)=>{
-      apiMocker(app, paths.resolveApp(mockFile), {
-        proxy: proxyConfig || {}
-      })
+      apiMocker(app, paths.resolveApp(mockFile));
     }
   }
 
-  // if(isPlainObject(proxyConfig)){
-  //   if(existsSync(paths.resolveApp(mockFile))){
-  //     console.warn('Mocker file does not exist!.');
-  //   }else{
-  //     defaultConfig.before = (app)=>{
-  //       apiMocker(app, paths.resolveApp(mockFile), {
-  //         proxy: proxyConfig
-  //       })
-  //     }
-  //   }
-  // }
-
-  return Object.assign({}, defaultConfig, serverConfig);
+  return Object.assign({}, defaultConfig, devServer);
 }
