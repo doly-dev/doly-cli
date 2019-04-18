@@ -450,7 +450,7 @@ export default {
 
 ### proxy
 
-本地服务代理配置，参考[mocker-api](https://www.npmjs.com/package/mocker-api)
+本地服务代理配置，参考webpack[devserver.proxy](https://webpack.docschina.org/configuration/dev-server/#devserver-proxy)
 
 示例：
 

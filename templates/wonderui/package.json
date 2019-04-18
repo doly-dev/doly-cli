@@ -17,6 +17,6 @@
     "wonder-ui": "^0.3.9"
   },
   "devDependencies": {
-    "doly-cli": "^0.3.6"
+    "doly-cli": "^0.3.7"
   }
 }
