@@ -81,9 +81,7 @@ function getWebpackConfig({
 
             // fix：antd的Form.create() 和 react-mobx 的observer一起使用在IE下报错的问题
             keep_classnames: true,
-            keep_fargs: true,
             keep_fnames: true,
-            keep_infinity: true,
           },
           mangle: {
             safari10: true,
