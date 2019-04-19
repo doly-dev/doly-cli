@@ -18,6 +18,6 @@
   },
   "devDependencies": {
     "babel-plugin-import": "^1.11.0",
-    "doly-cli": "^0.3.7"
+    "doly-cli": "^0.3.8"
   }
 }

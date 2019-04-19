@@ -22,7 +22,7 @@
   "devDependencies": {
     "babel-plugin-import": "^1.11.0",
     "cssnano": "^4.1.10",
-    "doly-cli": "^0.3.7",
+    "doly-cli": "^0.3.8",
     "postcss-px-to-viewport": "^1.1.0"
   }
 }
