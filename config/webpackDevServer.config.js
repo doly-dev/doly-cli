@@ -10,7 +10,6 @@ module.exports = function ({
   const { proxy, mockFile, devServer } = config;
 
   const defaultConfig = {
-    contentBase: paths.appBuild,
     compress: true, // 启用gzip压缩
     host: '0.0.0.0',
     port: 9000, // 端口

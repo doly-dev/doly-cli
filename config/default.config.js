@@ -58,6 +58,9 @@ module.exports = {
   // 禁用 CSS 的 SourceMap 生成。
   disableCSSSourceMap: isProd,
 
+  // 默认支持 xxx.module.css
+  cssModulesWithAffix: true,
+
   // js文本替换，兼容fis脚手架项目 `__uri`
   // replace: {
   //   search: '__uri',

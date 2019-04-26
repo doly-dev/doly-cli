@@ -7,7 +7,7 @@ module.exports = function(theme, opts = {}) {
   if (typeof theme === 'string') {
     const themePath = isAbsolute(theme) ? theme : resolve(cwd, theme);
     if (existsSync(themePath)) {
-      const themeConfig = require(themePath); // eslint-disable-line
+      const themeConfig = require(themePath);
       if (typeof themeConfig === 'function') {
         return themeConfig();
       } else {

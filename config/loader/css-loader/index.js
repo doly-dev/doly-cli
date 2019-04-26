@@ -1,17 +1,31 @@
-const { extname } = require('path');
+const { extname, resolve } = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 const normalizeTheme = require('./normalizeTheme');
 
-module.exports = function (config={}, paths={}) {
+module.exports = function ({
+  cwd = process.cwd(),
+  theme,
+  hmr=true,
+  cssInline=false,
+  disableCSSModules=false,
+  disableCSSSourceMap=false,
+  cssModulesWithAffix=true,
+  cssModulesExcludes=[],
+  cssLoaderOptions={},
+  lessLoaderOptions={},
+  extraPostCSSPlugins=[],
+  browsers=['last 2 versions']
+}) {
 
-  const isDevWithServer = process.env.COMMANDER ==='dev';
+  const appNodeModulesPath = resolve(cwd, 'node_modules');
 
-  const theme = normalizeTheme(config.theme);
+  theme = normalizeTheme(theme);
 
   const cssOptions = {
     importLoaders: 1,
-    sourceMap: !config.disableCSSSourceMap,
-    ...(config.cssLoaderOptions || {}),
+    sourceMap: !disableCSSSourceMap,
+    ...cssLoaderOptions,
   }
 
   const cssModulesConfig = {
@@ -33,11 +47,11 @@ module.exports = function (config={}, paths={}) {
     loader: 'postcss-loader',
     options: {
       ident: 'postcss',
-      sourceMap: !config.disableCSSSourceMap,
+      sourceMap: !disableCSSSourceMap,
       plugins: [
-        require('postcss-flexbugs-fixes'), // eslint-disable-line
-        require('autoprefixer')({browsers: config.browserslist, flexbox: 'no-2009'}),
-        ...(config.extraPostCSSPlugins ? config.extraPostCSSPlugins : []),
+        require('postcss-flexbugs-fixes'),
+        require('autoprefixer')({browsers, flexbox: 'no-2009'}),
+        ...extraPostCSSPlugins,
       ]
     }
   }
@@ -47,8 +61,8 @@ module.exports = function (config={}, paths={}) {
     options: {
       modifyVars: theme,
       javascriptEnabled: true,
-      sourceMap: !config.disableCSSSourceMap,
-      ...(config.lessLoaderOptions || {}),
+      sourceMap: !disableCSSSourceMap,
+      ...lessLoaderOptions,
     }
   }
 
@@ -56,11 +70,11 @@ module.exports = function (config={}, paths={}) {
     if (/node_modules/.test(filePath)) {
       return true;
     }
-    if (config.cssModulesWithAffix) {
+    if (cssModulesWithAffix) {
       if (/\.module\.(css|less)$/.test(filePath)) return true;
     }
-    if (config.cssModulesExcludes) {
-      for (const exclude of config.cssModulesExcludes) {
+    if (cssModulesExcludes) {
+      for (const exclude of cssModulesExcludes) {
         // if (filePath.indexOf(exclude) > -1) return true;
         if (exclude instanceof RegExp) {
           return exclude.test(filePath);
@@ -75,7 +89,7 @@ module.exports = function (config={}, paths={}) {
   const cssRule = {
     test: /\.css$/,
     use: [
-      createCSSLoader(!config.disableCSSModules),
+      createCSSLoader(!disableCSSModules),
       postcssLoader
     ],
     exclude: cssExclude
@@ -84,7 +98,7 @@ module.exports = function (config={}, paths={}) {
   const lessRule = {
     test: /\.less$/,
     use: [
-      createCSSLoader(!config.disableCSSModules),
+      createCSSLoader(!disableCSSModules),
       postcssLoader,
       lessLoader
     ],
@@ -97,7 +111,7 @@ module.exports = function (config={}, paths={}) {
       createCSSLoader(false),
       postcssLoader
     ],
-    include: paths.appNodeModules
+    include: appNodeModulesPath
   };
 
   const lessInNodeModulesRule = {
@@ -107,13 +121,13 @@ module.exports = function (config={}, paths={}) {
       postcssLoader,
       lessLoader
     ],
-    include: paths.appNodeModules
+    include: appNodeModulesPath
   };
 
   // 固定名称模块
   const affixCssModulesRules = [];
 
-  if (config.cssModulesWithAffix) {
+  if (cssModulesWithAffix) {
     affixCssModulesRules.push({
       test: /\.module\.css$/,
       use: [
@@ -135,7 +149,7 @@ module.exports = function (config={}, paths={}) {
   // 过滤cssModules的规则
   const cssModulesExcludesRules = [];
 
-  if(config.cssModulesExcludes){
+  if(cssModulesExcludes){
     
     function cssModulesExcludesTest(exclude) {
       return function (filePath) {
@@ -147,7 +161,7 @@ module.exports = function (config={}, paths={}) {
       }
     }
 
-    config.cssModulesExcludes.forEach((exclude, index) => {
+    cssModulesExcludes.forEach((exclude, index) => {
 
       const ext = extname(exclude).toLowerCase();
 
@@ -168,12 +182,12 @@ module.exports = function (config={}, paths={}) {
   }
 
   return [cssRule, lessRule, cssInNodeModulesRule, lessInNodeModulesRule, ...affixCssModulesRules, ...cssModulesExcludesRules].map(rule=>{
-    if(config.cssInline){
+    if(cssInline){
       rule.use.unshift('style-loader');
     }else{
       rule.use.unshift(MiniCssExtractPlugin.loader);
 
-      if(isDevWithServer){
+      if(hmr){
         rule.use.unshift({
           loader: 'css-hot-loader',
           options: {
