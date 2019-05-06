@@ -28,6 +28,9 @@ module.exports = {
   // 构建完成后，输出zip包
   // zip: 'build/simple.zip',
 
+  // 扩展 babel-loader 的 plugins
+  extraBabelPlugins: [['import', { libraryName: 'antd', style: true }]],
+
   // 通过 webpack 的 DefinePlugin 传递给代码，值会自动做 JSON.stringify 处理。
   define: {
     APIURL: '/'

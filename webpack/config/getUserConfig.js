@@ -8,7 +8,7 @@ const { CONFIGFILE } = require('./contants');
  * @param  {Object} opts       [description]
  * @return {[type]}            [description]
  */
-function getUserConfig(opts = {}) {
+module.exports = function getUserConfig(opts = {}) {
   const {
     cwd = process.cwd(),
     configFile = CONFIGFILE
@@ -28,5 +28,3 @@ function getUserConfig(opts = {}) {
 
   return userConfig;
 }
-
-module.exports = getUserConfig;

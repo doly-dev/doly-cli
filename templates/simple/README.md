@@ -43,6 +43,13 @@ npm install
 npm start
 ```
 
+or 
+
+```shell
+# 不走本地伪造数据
+npm run start:no-mock
+```
+
 > 启动完成后会自动打开浏览器访问 [http://localhost:9000](http://localhost:9000)
 
 ### 打包

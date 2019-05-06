@@ -1,9 +1,11 @@
 const isPlainObject = require('is-plain-object');
 const { existsSync } = require('fs');
 
-const apiMocker = require('../mocker-api');
+const apiMocker = require('mocker-api');
 
-module.exports = function ({
+const noMock = process.env.MOCK === 'none';
+
+module.exports = function getWebpackDevServerConfig({
   config={}, 
   paths={}
 }) {
@@ -31,7 +33,7 @@ module.exports = function ({
     proxy
   }
 
-  if(existsSync(paths.resolveApp(mockFile))){
+  if(existsSync(paths.resolveApp(mockFile)) && !noMock){
     defaultConfig.before = (app)=>{
       apiMocker(app, paths.resolveApp(mockFile));
     }

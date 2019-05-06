@@ -2,9 +2,9 @@ const loader = require('./loader');
 const plugins = require('./plugins');
 const getOptimization = require('./optimization');
 
-const getConfigEntry = require('./getConfigEntry');
+const getEntry = require('./entry');
 
-function getWebpackConfig({
+module.exports = function getWebpackConfig({
   config={}, 
   paths={}
 }) {
@@ -42,7 +42,7 @@ function getWebpackConfig({
 
   const webpackConfig =  {
     mode,
-    entry: getConfigEntry({entry, isBuild: !isDevWithServer, hot}),
+    entry: getEntry({entry, isBuild: !isDevWithServer, hot}),
     output: {
       path: paths.appBuild,
       publicPath: publicPath,
@@ -108,9 +108,3 @@ function getWebpackConfig({
 
   return webpackConfig;
 }
-
-module.exports = getWebpackConfig;
-
-
-
-

@@ -47,7 +47,6 @@ export default class HomePage extends Component {
     return (
       <div>
         <Button className={styles.btn} onClick={this.getNotices} disabled={loading}>{loading ? '获取通知中...' : '获取通知列表（mock数据）'}</Button>
-        <Button>13245</Button>
         <h2>
           通知列表
           {

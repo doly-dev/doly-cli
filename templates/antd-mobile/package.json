@@ -4,6 +4,7 @@
   "description": "use antd-mobile by doly-cli.",
   "scripts": {
     "start": "doly dev",
+    "start:no-mock": "cross-env MOCK=none doly dev",
     "build": "doly build"
   },
   "author": "Neo_Huang",
@@ -21,8 +22,9 @@
   },
   "devDependencies": {
     "babel-plugin-import": "^1.11.0",
+    "cross-env": "^5.2.0",
     "cssnano": "^4.1.10",
-    "doly-cli": "^0.3.9",
+    "doly-cli": "^0.3.10",
     "postcss-px-to-viewport": "^1.1.0"
   }
 }

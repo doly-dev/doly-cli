@@ -1,7 +1,7 @@
 const { resolve } = require('path');
 const { realpathSync } = require('fs');
 
-function getPaths({
+module.exports = function getPaths({
   cwd = process.cwd(),
   src = 'src',
   outputPath = 'dist',
@@ -10,7 +10,7 @@ function getPaths({
 } = {}) {
   const appDirectory = realpathSync(cwd);
   const resolveApp = relativePath => resolve(appDirectory, relativePath);
-  const resolveOwn = relativePath => resolve(__dirname, '..', relativePath);
+  const resolveOwn = relativePath => resolve(__dirname, '../..', relativePath);
 
   return {
     appBuild: resolveApp(outputPath),
@@ -27,5 +27,3 @@ function getPaths({
     appDirectory,
   }
 }
-
-module.exports = getPaths;

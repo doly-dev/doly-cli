@@ -19,7 +19,7 @@ program
   .alias('i')
   .description('初始化项目脚手架')
   .action(function (projectName, options) {
-    require('../init')({appName: projectName});
+    require('../cli/init')({appName: projectName});
   });
 
 program
@@ -29,7 +29,7 @@ program
     process.env.NODE_ENV = env || 'development';
     process.env.COMMANDER = 'dev';
     
-    require('../dev')();
+    require('../cli/dev')();
   });
 
 program
@@ -39,7 +39,7 @@ program
     process.env.NODE_ENV = env || 'production';
     process.env.COMMANDER = 'build';
 
-    require('../build')();
+    require('../cli/build')();
   });
  
 program.parse(process.argv);

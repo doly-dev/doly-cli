@@ -6,13 +6,13 @@ const rimraf = require('rimraf');
 const chalk = require('chalk');
 const isPlainObject = require('is-plain-object');
 const { printFileSizesAfterBuild } = require('react-dev-utils/FileSizeReporter');
-const { success, info, error } = require('./utils/log');
+const { success, info, error } = require('../utils/log');
 
 const archiver = require('archiver');
 const mkdirp = require('mkdirp');
 
-const clearConsole = require('./utils/clearConsole');
-const {webpackConfig, webpackDevServerConfig, paths, config: userConfig} = require('./config');
+const clearConsole = require('../utils/clearConsole');
+const {webpackConfig, webpackDevServerConfig, paths, config: userConfig} = require('../webpack');
 
 // const isInteractive = process.stdout.isTTY;
 

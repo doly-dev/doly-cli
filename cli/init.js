@@ -10,9 +10,10 @@ const which = require('which');
 
 const inquirer = require('inquirer');
 
-const changeJsonfile = require('./utils/changeJsonfile');
+const changeJsonfile = require('../utils/changeJsonfile');
+const { success, info, error } = require('../utils/log');
 
-const npms = ['tnpm', 'cnpm', 'npm'];
+const npms = ['cnpm', 'tnpm', 'npm'];
 
 function findNpm() {
   for (let i = 0; i < npms.length; i++) {
@@ -34,7 +35,7 @@ function isDirectory(directoryName) {
 
 function isEmptyDirectory(directoryName) {
   if(!isDirectory(directoryName)){
-    console.error(`Folder does not exist.`);
+    error(`Folder does not exist.`);
     return;
   }
 
@@ -66,21 +67,21 @@ const scaffoldList = [
   {
     name: 'simple',
     description: 'Basic, simple and general.',
-    templatePath: path.resolve(__dirname, 'templates/simple')
+    templatePath: path.resolve(__dirname, '../templates/simple')
   },
   {
     name: 'mobx + wonder-ui',
     description: 'Mobx with wonder-ui, suitable for mobile.',
-    templatePath: path.resolve(__dirname, 'templates/wonderui')
+    templatePath: path.resolve(__dirname, '../templates/wonderui')
   },
   // {
   //   name: 'antd',
-  //   templatePath: path.resolve(__dirname, 'templates/antd'),
+  //   templatePath: path.resolve(__dirname, '../templates/antd'),
   //   description: 'Suitable for mobile.'
   // },
   // {
   //   name: 'antd-mobile',
-  //   templatePath: path.resolve(__dirname, 'templates/antd-mobile'),
+  //   templatePath: path.resolve(__dirname, '../templates/antd-mobile'),
   //   description: 'Suitable for mobile.'
   // }
 ];
@@ -91,7 +92,7 @@ module.exports = function(
     cwd = process.cwd()
   } = {}
 ) {
-
+// return info(path.resolve(__dirname, '../templates/simple'));
   // 项目目录
   let appPath = appName ? path.resolve(cwd, appName) : cwd;
 
@@ -103,8 +104,8 @@ module.exports = function(
   // 如果该目录不是空目录，提示
   if(!isEmptyDirectory(appPath)){
     console.log();
-    console.error(chalk.red('Please empty folders for this operation or introduced to the project name.'));
-    console.error(chalk.red('请在空文件夹进行该操作 或 传入项目名称。 doly init [projectName]'));
+    error(chalk.red('Please empty folders for this operation or introduced to the project name.'));
+    error(chalk.red('请在空文件夹进行该操作 或 传入项目名称。 doly init [projectName]'));
     console.log();
     return;
   }

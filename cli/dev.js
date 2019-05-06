@@ -2,11 +2,11 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const chalk = require('chalk');
 const openBrowser = require('react-dev-utils/openBrowser');
-const clearConsole = require('./utils/clearConsole');
-const choosePort = require('./utils/choosePort');
+const clearConsole = require('../utils/clearConsole');
+const choosePort = require('../utils/choosePort');
 
-const prepareUrls = require('./utils/prepareUrls');
-const { success, info, error } = require('./utils/log');
+const prepareUrls = require('../utils/prepareUrls');
+const { success, info, error } = require('../utils/log');
 
 const isInteractive = process.stdout.isTTY;
 const PROTOCOL = 'http';
@@ -30,7 +30,7 @@ function wrapChoosePort(port) {
 
 function dev() {
 
-  const { webpackConfig, webpackDevServerConfig, watchConfigs, unwatchConfigs } = require('./config');
+  const { webpackConfig, webpackDevServerConfig, watchConfigs, unwatchConfigs } = require('../webpack');
   const { port, host } = webpackDevServerConfig;
 
   wrapChoosePort(port).then(innerPort=>{
