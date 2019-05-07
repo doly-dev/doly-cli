@@ -125,7 +125,16 @@ module.exports = function(
 
       if (templatePath || fs.existsSync(templatePath)) {
 
+        const scaffoldCopy = ora(`scaffold copying...`);
+        scaffoldCopy.start();
+
         fs.copySync(templatePath, appPath);
+
+        console.log(chalk.green('scaffold copy end'));
+
+        scaffoldCopy.stop();
+
+        // ---
 
         changePackageJsonName(appPath, appName).then(()=>{
           const npm = findNpm();

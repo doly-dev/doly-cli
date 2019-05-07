@@ -1,3 +1,5 @@
+const delay = require('doly-cli/mocker-api/delay');
+
 const noMock = process.env.MOCK === 'none';
 
 const proxy = {
@@ -23,4 +25,4 @@ const proxy = {
   }
 }
 
-module.exports = (noMock ? {} : proxy, 1000);
+module.exports = (noMock ? {} : delay(proxy, 1000));
