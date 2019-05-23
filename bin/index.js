@@ -2,25 +2,28 @@
 
 const pkg = require('../package.json');
 const program = require('commander');
+const run = require('create-doly').run;
+const list = require('create-doly').list;
 
 program
   .version(pkg.version, '-v, --version')
-  .description('run setup commands for all envs')
-  // .usage('init|i')
-  // .usage('dev [options]')
-  // .usage('build [options]')
-  // .option('-C, --chdir <path>', 'change the working directory')
-  // .option('-c, --config <path>', 'set config path. defaults to ./deploy.conf')
-  // .option('-T, --no-tests', 'ignore test hook');
+  .description('run setup commands for all envs');
 
 program
-  // .command('init [projectName]')
   .command('init [projectName]')
   .alias('i')
   .description('初始化项目脚手架')
   .action(function (projectName, options) {
-    require('../cli/init')({appName: projectName});
+    run();
   });
+
+program
+    .command('list [projectName]')
+    .alias('i')
+    .description('初始化项目脚手架')
+    .action(function (projectName, options) {
+      list();
+    });
 
 program
   .command('dev [env]')
