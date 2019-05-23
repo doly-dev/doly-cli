@@ -29,7 +29,7 @@ npm install doly-cli -g
 doly -v
 
 # 初始化项目脚手架
-doly init [projectName]
+doly init
 
 # 本地开发。代码编译并启动本地服务，env 默认 development 环境
 doly dev [env]
