@@ -249,7 +249,7 @@ hash: true
 ignoreMomentLocale: false
 ```
 
-**注意开启后，可能导致antd的日期组件月份显示英文**
+*注意开启后，可能导致antd的日期组件月份显示英文*
 
 ### manifest
 
