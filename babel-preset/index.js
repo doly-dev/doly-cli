@@ -3,7 +3,8 @@ const path = require('path');
 module.exports = function ({
   extraPresets=[],
   extraPlugins=[],
-  browsers=['last 2 versions']
+  browsers=['last 2 versions'],
+  typescript=false
 }) {
   const targets = {
     browsers
@@ -84,15 +85,21 @@ module.exports = function ({
     )
   }
 
+  const presets = [
+    [require.resolve("@babel/preset-env"), {
+      targets,
+      exclude
+    }], 
+    require.resolve("@babel/preset-react"),
+    ...extraPresets,
+  ];
+
+  if(typescript){
+    presets.push(require.resolve("@babel/preset-typescript"));
+  }
+
   return {
-    presets: [
-      [require.resolve("@babel/preset-env"), {
-        targets,
-        exclude
-      }], 
-      require.resolve("@babel/preset-react"),
-      ...extraPresets,
-    ],
+    presets,
     plugins
   }
 }

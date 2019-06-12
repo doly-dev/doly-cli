@@ -1,3 +1,4 @@
+const { join } = require('path');
 const babelPreset = require('../../babel-preset');
 const cssLoader = require('./css-loader');
 
@@ -14,12 +15,15 @@ module.exports = function (opts) {
     ...restOpts
   } = opts;
 
+
+  const cwd = process.cwd();
   const hot = !devServer || typeof devServer.hot === 'undefined' || devServer.hot;
   const isDev = process.env.COMMANDER ==='dev';
   const hmr = hot && isDev;
+  const tsConfigFile = opts.tsConfigFile || join(cwd, 'tsconfig.json');
 
   const jsRule = {
-    test: /\.(js|jsx)$/,
+    test: /\.jsx?$/,
     include: paths.appSrc,
     exclude: /(node_modules|bower_components)/,
     enforce: 'pre',
@@ -40,8 +44,43 @@ module.exports = function (opts) {
     ]
   }
 
+  const tsRule = {
+    test: /\.tsx?$/,
+    include: paths.appSrc,
+    exclude: /(node_modules|bower_components)/,
+    enforce: 'pre',
+    use:[
+      {
+        loader: 'babel-loader',
+        options: {
+          customize: paths.resolveOwn(
+            'utils/webpack-overrides'
+          ),
+          ...babelPreset({
+            extraPresets,
+            extraPlugins,
+            browsers,
+            typescript: true
+          })
+        }
+      },
+      {
+        loader: 'ts-loader',
+        options: {
+          configFile: tsConfigFile,
+          transpileOnly: true
+        }
+      }
+    ]
+  }
+
   if(replace){
     jsRule.use.push({
+      loader: 'string-replace-loader',
+      options: replace
+    });
+
+    tsRule.use.push({
       loader: 'string-replace-loader',
       options: replace
     });
@@ -64,22 +103,20 @@ module.exports = function (opts) {
     ]
   }
 
-  const htmlRule = {
-    test: /\.(html)$/,
-    use: {
-      loader: 'html-loader',
-      options: {
-        attrs: ['img:src']
-      }
-    }
-  }
-
-  const rules = [jsRule, ...cssRules, imgRule, htmlRule];
+  const rules = [jsRule, tsRule, ...cssRules, imgRule];
   
   // 默认在entry中插入 模块热替换 代码
   if(hmr){
     rules.push({
-      test: /\.(js|jsx)$/,
+      test: /\.jsx?$/,
+      exclude: /(node_modules|bower_components)/,
+      enforce: 'post',
+      use: [
+        {loader: paths.resolveOwn('utils/hmr-loader')}
+      ]
+    });
+    rules.push({
+      test: /\.tsx?$/,
       exclude: /(node_modules|bower_components)/,
       enforce: 'post',
       use: [

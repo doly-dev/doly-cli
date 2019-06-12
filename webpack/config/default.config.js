@@ -157,14 +157,6 @@ module.exports = {
   //   }
   // },
 
-  // ---------------上面第一个版本实现，以下配置迭代实现---------------
-
-  // image 配置项，待支持 扩展配置、hash等
-  // 所有资源(image/js/css)都单独提炼outputPath属性，区分fileName
-
-  // 代码检查，支持本地自定义 .eslintrc，默认使用 airbnb 代码规范
-  // eslint: false,
-
   // 配置主题，实际上是配 less 变量。支持对象和字符串两种类型，字符串需要指向一个返回配置的文件。
   // theme,
 
@@ -174,10 +166,7 @@ module.exports = {
   // 定义额外的 babel plugin 列表，格式为数组。
   // extraBabelPlugins,
 
-  // 定义额外需要做 babel 转换的文件匹配列表，格式为数组。
-  // extraBabelIncludes,
-
-  // 禁用 import() 按需加载，全部打包在一个文件里，通过 https://github.com/seeden/babel-plugin-dynamic-import-node-sync 实现。
-  // disableDynamicImport,
+  // TODO: 代码检查，支持本地自定义 .eslintrc，默认使用 airbnb 代码规范
+  // eslint: false,
 }
 
