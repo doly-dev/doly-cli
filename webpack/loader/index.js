@@ -103,7 +103,17 @@ module.exports = function (opts) {
     ]
   }
 
-  const rules = [jsRule, tsRule, ...cssRules, imgRule];
+  const htmlRule = {
+    test: /\.(html)$/,
+    use: {
+      loader: 'html-loader',
+      options: {
+        // attrs: ['img:src']
+      }
+    }
+  }
+
+  const rules = [jsRule, tsRule, ...cssRules, imgRule, htmlRule];
   
   // 默认在entry中插入 模块热替换 代码
   if(hmr){
