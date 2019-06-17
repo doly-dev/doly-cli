@@ -19,7 +19,6 @@ module.exports = {
   paths,
   webpackConfig,
   webpackDevServerConfig,
-  // reloadConfig,
   watchConfigs,
   unwatchConfigs
 }

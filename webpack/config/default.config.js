@@ -3,9 +3,10 @@ const isProd = process.env.NODE_ENV === 'production';
 const defaultDevtool = isProd ? undefined : 'cheap-module-source-map';
 
 module.exports = {
+
   // 指定 webpack 入口文件
   // 如果是多页面多入口，请使用对象模式，并配置 optimization的splitChunks
-  entry: 'src/app.js',
+  entry: './src/app.js',
 
   // 配置 webpack 的 output.publicPath 属性。
   outputPath: 'dist',
@@ -70,7 +71,7 @@ module.exports = {
 
   // 通过 webpack 的 DefinePlugin 传递给代码，值会自动做 JSON.stringify 处理。
   // define: {
-  //   APIURL: 'http://www.baidu.com/'
+  //   APIURL: ''
   // },
 
   // 配置 webpack 的externals属性。

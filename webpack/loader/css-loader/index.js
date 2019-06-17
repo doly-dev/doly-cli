@@ -50,7 +50,7 @@ module.exports = function ({
       sourceMap: !disableCSSSourceMap,
       plugins: [
         require('postcss-flexbugs-fixes'),
-        require('autoprefixer')({browsers, flexbox: 'no-2009'}),
+        require('autoprefixer')({overrideBrowserslist: browsers, flexbox: 'no-2009'}),
         ...extraPostCSSPlugins,
       ]
     }
