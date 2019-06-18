@@ -68,7 +68,6 @@ module.exports = function (opts) {
         loader: 'ts-loader',
         options: {
           configFile: tsConfigFile,
-          transpileOnly: true
         }
       }
     ]
