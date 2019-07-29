@@ -185,16 +185,13 @@ module.exports = function ({
     if(cssInline){
       rule.use.unshift('style-loader');
     }else{
-      rule.use.unshift(MiniCssExtractPlugin.loader);
-
-      if(hmr){
-        rule.use.unshift({
-          loader: 'css-hot-loader',
-          options: {
-            reloadAll: true,
-          }
-        });
-      }
+      rule.use.unshift({
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+          hmr: hmr,
+          reloadAll: true,
+        }
+      });
     }
 
     return rule;
