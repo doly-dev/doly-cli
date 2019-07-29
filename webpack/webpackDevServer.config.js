@@ -15,7 +15,6 @@ module.exports = function getWebpackDevServerConfig({
     compress: true, // 启用gzip压缩
     host: '0.0.0.0',
     port: 9000, // 端口
-    open: true, // 自动打开浏览器
     disableHostCheck: true,
     compress: true,
     clientLogLevel: 'none',
