@@ -316,6 +316,8 @@ css: {
 }
 ```
 
+**注意开发模式下，如果使用hash名称可能导致HMR失效**
+
 ### cssInline
 
 样式包含js中，用style进行加载。默认为 `false`
