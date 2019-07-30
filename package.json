@@ -1,6 +1,6 @@
 {
   "name": "doly-cli",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "A simple CLI for web development",
   "main": "index.js",
   "scripts": {
@@ -42,7 +42,7 @@
     "babel-plugin-macros": "2.6.1",
     "babel-plugin-named-asset-import": "0.3.2",
     "chalk": "2.4.2",
-    "chokidar": "3.0.2",
+    "chokidar": "2.1.6",
     "copy-webpack-plugin": "5.0.4",
     "create-doly": "~0.0.14",
     "css-loader": "2.1.1",
