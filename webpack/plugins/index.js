@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const WebpackBar = require('webpackbar');
+// const WebpackBar = require('webpackbar');
 const isPlainObject = require('is-plain-object');
 const chalk = require('chalk');
 
@@ -130,14 +130,14 @@ module.exports = function (opts) {
   }
 
   // ProgressBar
-  if (process.platform === 'win32') {
+  // if (process.platform === 'win32') {
     plugins.push(new ProgressBarPlugin({
       format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
       clear: true
     }));
-  } else {
-    plugins.push(new WebpackBar());
-  }
+  // } else {
+  //   plugins.push(new WebpackBar());
+  // }
 
   // HotModuleReplacementPlugin
   if(hmr){
