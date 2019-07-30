@@ -29,9 +29,8 @@ module.exports = function ({
   }
 
   const cssModulesConfig = {
-    modules: {
-      localIdentName: cssOptions.localIdentName || '[name]_[local]_[hash:base64:5]'
-    }
+    modules: true,
+    localIdentName: cssOptions.localIdentName || '[name]_[local]_[hash:base64:5]',
   }
 
   function createCSSLoader(cssModules) {
