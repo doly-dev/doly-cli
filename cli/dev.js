@@ -9,7 +9,6 @@ const prepareUrls = require('../utils/prepareUrls');
 const { success, info, error } = require('../utils/log');
 
 const isInteractive = process.stdout.isTTY;
-const PROTOCOL = 'http';
 
 let isRestart = false;
 let isFirstCompile = true;
@@ -31,7 +30,7 @@ function wrapChoosePort(port) {
 function dev() {
 
   const { webpackConfig, webpackDevServerConfig, watchConfigs, unwatchConfigs } = require('../webpack');
-  const { port, host } = webpackDevServerConfig;
+  const { port, host, https } = webpackDevServerConfig;
 
   wrapChoosePort(port).then(innerPort=>{
     if (innerPort === null) {
@@ -41,8 +40,9 @@ function dev() {
     cachePort = innerPort;
 
     const compiler = webpack(webpackConfig);
+    const protocol = https ? 'https' : 'http';
 
-    const urls = prepareUrls(PROTOCOL, host, innerPort);
+    const urls = prepareUrls(protocol, host, innerPort);
 
     compiler.hooks.watchRun.tap('dev-server', ()=>{
       if(isInteractive && isFirstCompile && !isRestart){
