@@ -35,15 +35,18 @@ module.exports = function (opts) {
 
   // HtmlWebpackPlugin
   const htmls = !Array.isArray(html) ? [html] : html;
-  const defaultHtml = resolve('./default.html');
+  const defaultHtml = resolve(__dirname, './document.ejs');
 
   // 默认html
-  // if(htmls.length <= 0){
-  //   htmls.push({
-  //     filename: 'index.html',
-  //     template: defaultHtml
-  //   });
-  // }
+  if(htmls.length <= 0){
+    htmls.push({
+      filename: 'index.html',
+      template: defaultHtml,
+      appMountId: 'root',
+      mobile: true,
+      title: 'Document'
+    });
+  }
 
   htmls.forEach(htmlItem=>{
     plugins.push(new HtmlWebpackPlugin({

@@ -208,7 +208,7 @@ outputFilename: '[name].[chunkhash:8].js'
 也可以自定义目录
 
 ```javascript
-outputFilename: 'res/i/[name].[chunkhash:8].js'
+outputFilename: 'res/j/[name].[chunkhash:8].js'
 ```
 
 ### outputChunkFilename
@@ -216,13 +216,13 @@ outputFilename: 'res/i/[name].[chunkhash:8].js'
 配置 webpack 的 output.chunkFilename 属性。如果设置该值，`hash`配置对该项无效，需自己配置文件名 `hash`。默认：
 
 ```javascript
-chunkFilename: '[name].[chunkhash:8].chunk.js'
+outputChunkFilename: '[name].[chunkhash:8].chunk.js'
 ```
 
 也可以自定义目录
 
 ```javascript
-chunkFilename: 'res/i/[name].[chunkhash:8].chunk.js'
+outputChunkFilename: 'res/j/[name].[chunkhash:8].chunk.js'
 ```
 
 ### publicPath
