@@ -41,7 +41,7 @@ module.exports = function getWebpackConfig({
   })
 
   const webpackConfig =  {
-    mode,
+    mode: config.mode || mode,
     entry: getEntry({entry, isBuild: !isDevWithServer, hot}),
     output: {
       path: paths.appBuild,
