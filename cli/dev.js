@@ -6,18 +6,18 @@ const clearConsole = require('../utils/clearConsole');
 const choosePort = require('../utils/choosePort');
 
 const prepareUrls = require('../utils/prepareUrls');
-const { success, info, error } = require('../utils/log');
+const { info, error } = require('../utils/log');
+
+const devStatus = require('../utils/dev-status');
 
 const isInteractive = process.stdout.isTTY;
 
-let isRestart = false;
-let isFirstCompile = true;
 let cachePort = '';
 
 // fix 端口号冲突的情况下，每次都走 choose port 问题
 function wrapChoosePort(port) {
   return new Promise(resolve=>{
-    if(isRestart && cachePort){
+    if(devStatus.isRestart && cachePort){
       resolve(cachePort);
     }else{
       choosePort(port).then(innerPort=>{
@@ -45,13 +45,13 @@ function dev() {
     const urls = prepareUrls(protocol, host, innerPort);
 
     compiler.hooks.watchRun.tap('dev-server', ()=>{
-      if(isInteractive && isFirstCompile && !isRestart){
+      if(isInteractive && devStatus.isFirstCompile && !devStatus.isRestart){
         clearConsole();
       }
 
-      if(isRestart){
+      if(devStatus.isRestart){
         info(`Configuration changes, restart server...\n`);
-      }else if(isFirstCompile){
+      }else if(devStatus.isFirstCompile){
         info('Starting the development server...\n');
       }
     });
@@ -72,9 +72,10 @@ function dev() {
         return;
       }
 
-      if (isFirstCompile && !isRestart) {
+      if (devStatus.isFirstCompile && !devStatus.isRestart) {
           console.log(
             [
+              ``,
               `  App running at:`,
               `  - Local:   ${chalk.cyan(urls.localUrlForTerminal)}`,
               `  - Network: ${chalk.cyan(urls.lanUrlForTerminal)}`,
@@ -83,16 +84,16 @@ function dev() {
           console.log();
       }
 
-      if(isFirstCompile || isRestart){
+      if(devStatus.isFirstCompile || devStatus.isRestart){
         openBrowser(urls.localUrlForBrowser);
       }
 
-      if(isRestart){
-        isRestart = false;
+      if(devStatus.isRestart){
+        devStatus.isRestart = false;
       }
 
-      if (isFirstCompile) {
-        isFirstCompile = false;
+      if (devStatus.isFirstCompile) {
+        devStatus.isFirstCompile = false;
       }
     });
 
@@ -129,8 +130,8 @@ function dev() {
       if (watcher) {
         watcher.on('all', () => {
           try {
-            if(!isRestart){
-              isRestart = true;
+            if(!devStatus.isRestart){
+              devStatus.isRestart = true;
             }
 
             // 从失败中恢复过来，需要 reload 一次

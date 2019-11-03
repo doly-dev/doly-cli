@@ -538,20 +538,21 @@ extraPostCSSPlugins: [
 
 > IE9/10/11
 
-1. 入口文件顶部，引入 `@babel/polyfill`
+1. 入口文件顶部，引入 `core-js/stable`、`regenerator-runtime/runtime`
 2. `doly.config.js` 关闭开发服务的模块热替换，需手动刷新浏览器。建议在测试IE兼容时再关闭
 3. `doly.config.js` 配置 `browserslist`
 
-安装 `@babel/polyfill`
+安装 `core-js`、`regenerator-runtime`
 
 ```shell
-npm install @babel/polyfill --save
+npm install core-js regenerator-runtime
 ```
 
 在入口文件 `app.js` 顶部引入
 
 ```javascript
-import '@babel/polyfill'
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 ```
 
 `doly.config.js` 配置：

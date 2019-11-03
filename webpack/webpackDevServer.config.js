@@ -1,7 +1,7 @@
-const isPlainObject = require('is-plain-object');
 const { existsSync } = require('fs');
 
-const apiMocker = require('mocker-api');
+const apiMocker = require('doly-mocker-api');
+const devStatus = require('../utils/dev-status');
 
 const noMock = process.env.MOCK === 'none';
 
@@ -34,7 +34,11 @@ module.exports = function getWebpackDevServerConfig({
 
   if(existsSync(paths.resolveApp(mockFile)) && !noMock){
     defaultConfig.before = (app)=>{
-      apiMocker(app, paths.resolveApp(mockFile));
+      apiMocker(app, paths.resolveApp(mockFile),{
+        showFileAddLog: ()=>{
+          return !devStatus.isFirstCompile && !devStatus.isRestart;
+        }
+      });
     }
   }
 

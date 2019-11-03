@@ -1,1 +1,1 @@
-module.exports = require('mocker-api')
+module.exports = require('doly-mocker-api')

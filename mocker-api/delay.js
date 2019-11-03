@@ -1,1 +1,1 @@
-module.exports = require('mocker-api/utils/delay');
+module.exports = require('doly-mocker-api/utils/delay');
