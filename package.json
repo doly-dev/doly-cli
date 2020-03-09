@@ -1,6 +1,6 @@
 {
   "name": "doly-cli",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "A simple CLI for web development",
   "main": "index.js",
   "scripts": {
@@ -75,6 +75,7 @@
     "terser-webpack-plugin": "2.2.1",
     "ts-loader": "6.2.1",
     "typescript": "3.6.4",
+    "update-notifier": "^4.1.0",
     "url": "0.11.0",
     "url-loader": "2.2.0",
     "webpack": "4.41.2",

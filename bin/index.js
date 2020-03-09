@@ -14,6 +14,7 @@ program
   .alias('i')
   .description('初始化项目脚手架')
   .action(function (projectName, options) {
+    require("../utils/updateNotifier")();
     run();
   });
 
