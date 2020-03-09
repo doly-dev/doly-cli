@@ -1,7 +1,7 @@
 const updateNotifier = require('update-notifier');
 const pkg = require('../package.json');
 
-function updateNotifier() {
+function updatePkgNotifier() {
   // check if a new version of ncu is available and print an update notification
   const notifier = updateNotifier({ pkg });
   if (notifier.update && notifier.update.latest !== pkg.version) {
@@ -9,4 +9,4 @@ function updateNotifier() {
   }
 }
 
-module.exports = updateNotifier;
+module.exports = updatePkgNotifier;
