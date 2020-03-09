@@ -3,11 +3,11 @@ const babelPreset = require('../../babel-preset');
 const cssLoader = require('./css-loader');
 
 module.exports = function (opts) {
-  
+
   const {
-    extraBabelPresets:extraPresets,
-    extraBabelPlugins:extraPlugins,
-    browserslist:browsers,
+    extraBabelPresets: extraPresets,
+    extraBabelPlugins: extraPlugins,
+    browserslist: browsers,
     replace,
     image,
     devServer,
@@ -18,7 +18,7 @@ module.exports = function (opts) {
 
   const cwd = process.cwd();
   const hot = !devServer || typeof devServer.hot === 'undefined' || devServer.hot;
-  const isDev = process.env.COMMANDER ==='dev';
+  const isDev = process.env.COMMANDER === 'dev';
   const hmr = hot && isDev;
   const tsConfigFile = opts.tsConfigFile || join(cwd, 'tsconfig.json');
 
@@ -27,7 +27,7 @@ module.exports = function (opts) {
     include: paths.appSrc,
     exclude: /(node_modules|bower_components)/,
     enforce: 'pre',
-    use:[
+    use: [
       {
         loader: 'babel-loader',
         options: {
@@ -49,7 +49,7 @@ module.exports = function (opts) {
     include: paths.appSrc,
     exclude: /(node_modules|bower_components)/,
     enforce: 'pre',
-    use:[
+    use: [
       {
         loader: 'babel-loader',
         options: {
@@ -73,7 +73,7 @@ module.exports = function (opts) {
     ]
   }
 
-  if(replace){
+  if (replace) {
     jsRule.use.push({
       loader: 'string-replace-loader',
       options: replace
@@ -113,15 +113,15 @@ module.exports = function (opts) {
   }
 
   const rules = [jsRule, tsRule, ...cssRules, imgRule, htmlRule];
-  
+
   // 默认在entry中插入 模块热替换 代码
-  if(hmr){
+  if (hmr) {
     rules.push({
       test: /\.jsx?$/,
       exclude: /(node_modules|bower_components)/,
       enforce: 'post',
       use: [
-        {loader: paths.resolveOwn('utils/hmr-loader')}
+        { loader: paths.resolveOwn('utils/hmr-loader') }
       ]
     });
     rules.push({
@@ -129,7 +129,7 @@ module.exports = function (opts) {
       exclude: /(node_modules|bower_components)/,
       enforce: 'post',
       use: [
-        {loader: paths.resolveOwn('utils/hmr-loader')}
+        { loader: paths.resolveOwn('utils/hmr-loader') }
       ]
     });
   }
