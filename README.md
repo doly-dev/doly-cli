@@ -1,6 +1,6 @@
 # doly-cli
 
-`doly-cli` 是一个包含 `init` `dev` `build` 的命令行工具，参考了 react-dev-utils，create-react-app，roadhog， umi等优秀工具。
+`doly-cli` 是一个包含 `init` `dev` `build` 的命令行工具，参考了 create-react-app，roadhog， umi等优秀工具。
 
 - 📦 开箱即用的 react 应用开发工具，内置 css-modules、babel、less、postcss、HMR 等
 - 🚨 create-react-app 的体验

@@ -6,9 +6,7 @@ module.exports = function ({
   browsers=['last 2 versions'],
   typescript=false
 }) {
-  const targets = {
-    browsers
-  };
+  const targets = browsers;
 
   const exclude = [
     'transform-typeof-symbol',
