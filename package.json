@@ -1,6 +1,6 @@
 {
   "name": "doly-cli",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "description": "A simple CLI for web development",
   "main": "index.js",
   "scripts": {
@@ -44,7 +44,7 @@
     "chalk": "2.4.2",
     "chokidar": "2.1.8",
     "copy-webpack-plugin": "5.1.1",
-    "create-doly": "0.0.18",
+    "create-doly": "0.0.19",
     "css-loader": "2.1.1",
     "detect-port": "1.3.0",
     "doly-mocker-api": "1.0.0",
