@@ -74,9 +74,7 @@ function build() {
       // 相对与当前项目根目录的绝对路径
       let zipAbsPath = path.join(process.cwd(), dir);
 
-      mkdirp(zipAbsPath, function (err) {
-        if (err) error(err);
-      });
+      mkdirp.sync(zipAbsPath);
 
       let output = fs.createWriteStream(zipAbsPath + '/' + name + ext);
       let archive = archiver('zip', {

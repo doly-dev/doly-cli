@@ -127,6 +127,7 @@ module.exports = {
 
 索引：
 
+- [context](#context)
 - [entry](#entry)
 - [outputPath](#outputPath)
 - [zip](#zip)
@@ -155,6 +156,14 @@ module.exports = {
 - [mockFile](#mockFile)
 - [proxy](#proxy)
 - [env](#env)
+
+### context
+
+基础目录，相对当前执行目录的路径，用于从配置中解析入口起点和loader。默认：
+
+```
+'src'
+```
 
 ### entry
 
