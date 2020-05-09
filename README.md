@@ -544,12 +544,14 @@ extraPostCSSPlugins: [
 
 
 ## 如何兼容IE
-
+ 
+> `init` 的脚手架：`simple` 和 `mobile` 支持IE9，`admin` 支持IE11
+> 
 > IE9/10/11
 
-1. 入口文件顶部，引入 `core-js/stable`、`regenerator-runtime/runtime`
-2. `doly.config.js` 关闭开发服务的模块热替换，需手动刷新浏览器。建议在测试IE兼容时再关闭
-3. `doly.config.js` 配置 `browserslist`
+1. 创建 `utils/polyfill.js`，引入 `core-js/stable`、`regenerator-runtime/runtime`
+1. 入口文件添加 `utils/polyfill.js`
+2. 关闭开发服务的模块热替换，修改需手动刷新。建议在测试IE兼容时再关闭
 
 安装 `core-js`、`regenerator-runtime`
 
@@ -557,16 +559,21 @@ extraPostCSSPlugins: [
 npm install core-js regenerator-runtime
 ```
 
-在入口文件 `app.js` 顶部引入
+`utils/polyfill.js`
 
 ```javascript
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 ```
 
-`doly.config.js` 配置：
+入口文件添加 `utils/polyfill.js`，并关闭开发服务的模块热替换。
+
+在 `doly.config.js` 中配置：
 
 ```javascript
+entry: {
+  app: ["./src/utils/polyfill", "./src/app.js"]
+},
 devServer: {
   hot: false
 }
