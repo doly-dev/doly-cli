@@ -127,6 +127,7 @@ module.exports = {
 
 索引：
 
+- [mode](#mode)
 - [context](#context)
 - [entry](#entry)
 - [outputPath](#outputPath)
@@ -152,14 +153,21 @@ module.exports = {
 - [browserslist](#browserslist)
 - [devServer](#devServer)
 - [optimization](#optimization)
+- [terserOptions](#terserOptions)
 - [devtool](#devtool)
 - [mockFile](#mockFile)
 - [proxy](#proxy)
 - [env](#env)
 
+### mode
+
+`webpack` 的 `mode`，除了 `production` 环境外，其他环境默认为 `development`。
+
+支持设置其他环境使用 `production`，例如一个项目需要部署 `sandbox` 和 `production` 环境，同时又有不同自定义配置。
+
 ### context
 
-基础目录，相对当前执行目录的路径，用于从配置中解析入口起点和loader。默认：
+基础目录，相对当前执行目录的路径，用于从配置中解析入口起点和 `loader`。默认：
 
 ```
 'src'
@@ -167,13 +175,13 @@ module.exports = {
 
 ### entry
 
-指定 webpack 入口文件，支持 glob 格式。默认：
+指定 `webpack` 入口文件，支持 `glob` 格式。默认：
 
 ```javascript
 entry: 'src/app.js'
 ```
 
-如果是多页面多入口，请使用对象模式，并配置 optimization的splitChunks
+如果是多页面多入口，请使用对象模式，并配置 `optimization` 的 `splitChunks`
 
 ```javascript
 entry: {
@@ -190,7 +198,7 @@ entry: 'src/pages/*.js'
 
 ### outputPath
 
-配置 webpack 的 output.publicPath 属性。默认：
+配置 `webpack` 的 `output.publicPath` 属性。默认：
 
 ```javascript
 outputPath: 'dist'
@@ -208,7 +216,7 @@ zip: 'build/project.zip'
 
 ### outputFilename
 
-配置 webpack 的 output.filename 属性。如果设置该值，`hash`配置对该项无效，需自己配置文件名 `hash`。默认：
+配置 `webpack` 的 `output.filename` 属性。如果设置该值，`hash`配置对该项无效，需自己配置文件名 `hash`。默认：
 
 ```javascript
 outputFilename: '[name].[chunkhash:8].js'
@@ -222,7 +230,7 @@ outputFilename: 'res/j/[name].[chunkhash:8].js'
 
 ### outputChunkFilename
 
-配置 webpack 的 output.chunkFilename 属性。如果设置该值，`hash`配置对该项无效，需自己配置文件名 `hash`。默认：
+配置 `webpack` 的 `output.chunkFilename` 属性。如果设置该值，`hash`配置对该项无效，需自己配置文件名 `hash`。默认：
 
 ```javascript
 outputChunkFilename: '[name].[chunkhash:8].chunk.js'
@@ -236,7 +244,7 @@ outputChunkFilename: 'res/j/[name].[chunkhash:8].chunk.js'
 
 ### publicPath
 
-配置 webpack 的 output.publicPath 属性。默认：
+配置 `webpack` 的 `output.publicPath` 属性。默认：
 
 ```javascript
 publicPath: '/'
@@ -244,7 +252,7 @@ publicPath: '/'
 
 ### hash
 
-配置让构建资源文件名带 hash，通常会和 manifest 配合使用。如果单独设置了 `outputFilename ` `outputChunkFilename ` `css.filename` `css.chunkFilename` 则需要单独指定`filename` 的hash。默认：
+配置让构建资源文件名带 `hash`，通常会和 `manifest` 配合使用。如果单独设置了 `outputFilename ` `outputChunkFilename ` `css.filename` `css.chunkFilename` 则需要单独指定`filename` 的hash。默认：
 
 ```javascript
 hash: true
@@ -252,17 +260,17 @@ hash: true
 
 ### ignoreMomentLocale
 
-忽略moment 的 locale 文件,用于减少尺寸。默认：
+忽略 `moment` 的 `locale` 文件,用于减少尺寸。默认：
 
 ```javascript
 ignoreMomentLocale: false
 ```
 
-*注意开启后，可能导致antd的日期组件月份显示英文*
+*注意开启后，可能导致 `antd` 的日期组件月份显示英文*
 
 ### manifest
 
-配置后会生成 `manifest.json`，option 传给 [webpack-manifest-plugin](https://www.npmjs.com/package/webpack-manifest-plugin)。默认为空。
+配置后会生成 `manifest.json`，`option` 传给 [webpack-manifest-plugin](https://www.npmjs.com/package/webpack-manifest-plugin)。默认为空。
 
 示例：
 
@@ -274,7 +282,7 @@ manifest: {
 
 ### html
 
-配置页面信息，option 传给 [html-webpack-plugin](https://www.npmjs.com/package/html-webpack-plugin)。默认：
+配置页面信息，`option` 传给 [html-webpack-plugin](https://www.npmjs.com/package/html-webpack-plugin)。默认：
 
 ```javascript
 html: [{
@@ -333,11 +341,11 @@ css: {
 
 ### disableCSSModules
 
-禁用 CSS Modules。默认 `false`
+禁用 `CSS Modules`。默认 `false`
 
 ### disableCSSSourceMap
 
-禁用 CSS 的 SourceMap 生成。默认 `false`
+禁用 `CSS` 的 `SourceMap` 生成。默认 `false`
 
 ### replace
 
@@ -367,9 +375,9 @@ define: {
 
 ### externals
 
-配置 webpack 的[externals](https://webpack.docschina.org/configuration/externals/)属性。
+配置 `webpack` 的[externals](https://webpack.docschina.org/configuration/externals/)属性。
 
-例如，配置 react 和 react-dom 不打入代码
+例如，配置 `react` 和 `react-dom` 不打入代码
 
 html:
 
@@ -378,7 +386,7 @@ html:
 <script src='https://unpkg.com/react-dom@16.8.1/umd/react-dom.production.min.js'></script>
 ```
 
-doly.config.js 中:
+`doly.config.js` 中:
 
 ```javascript
 externals: {
@@ -389,11 +397,11 @@ externals: {
 
 ### extensions
 
-配置 webpack 的 resolve.extensions 属性。自动解析确定的扩展。默认值为：'web.mjs', 'mjs', 'web.js', 'js', 'web.ts', 'ts', 'web.tsx', 'tsx', 'json', 'web.jsx','jsx'。配置之后会进行合并。
+配置 `webpack` 的 `resolve.extensions` 属性。自动解析确定的扩展。默认值为：`'web.mjs', 'mjs', 'web.js', 'js', 'web.ts', 'ts', 'web.tsx', 'tsx', 'json', 'web.jsx','jsx'`。配置之后会进行合并。
 
 ### alias
 
-配置 webpack 的 resolve.alias 属性。
+配置 `webpack` 的 `resolve.alias` 属性。
 
 ### copy
 
@@ -414,11 +422,25 @@ browserslist: [
 
 ### optimization
 
-配置 webpack 的 [optimization](https://webpack.docschina.org/configuration/optimization/)。默认配置了minimize/minimizer，配置之后会进行合并。如果需要进行代码拆分可以配置 [splitChunks](https://juejin.im/post/5af1677c6fb9a07ab508dabb)
+配置 `webpack` 的 [optimization](https://webpack.docschina.org/configuration/optimization/)。默认配置了minimize/minimizer，配置之后会进行合并。如果需要进行代码拆分可以配置 [splitChunks](https://juejin.im/post/5af1677c6fb9a07ab508dabb)
+
+### terserOptions
+
+配置 [terser-webpack-plugin](https://www.npmjs.com/package/terser-webpack-plugin) 的 `terserOptions` ，将会和默认配置项递归合并。
+
+如部分场景需要在生产构建显示日志，配置如下：
+
+```javascript
+terserOptions: {
+  compress: {
+    drop_console: false
+  }
+}
+```
 
 ### devtool
 
-配置 webpack 的 [devtool](https://www.webpackjs.com/configuration/devtool/) 属性。默认区分开发和生产环境：
+配置 `webpack` 的 [devtool](https://www.webpackjs.com/configuration/devtool/) 属性。默认区分开发和生产环境：
 
 非 `production` 环境：
 
@@ -444,7 +466,7 @@ devtool: undefined
 mockFile: 'mocker/index.js'
 ```
 
-mocker/index.js 示例
+`mocker/index.js` 示例
 
 ```javascript
 export default {
@@ -461,7 +483,7 @@ export default {
 
 ### proxy
 
-本地服务代理配置，参考webpack[devserver.proxy](https://webpack.docschina.org/configuration/dev-server/#devserver-proxy)
+本地服务代理配置，参考 `webpack` [devserver.proxy](https://webpack.docschina.org/configuration/dev-server/#devserver-proxy)
 
 示例：
 
@@ -476,11 +498,10 @@ proxy: {
 
 ### env
 
-不同环境配置，如果build不是production，webpack mode不会设置为production。
+不同环境配置，如果 `build` 不是 `production` ，`webpack mode` 默认不设置为`production`（支持其他环境设置 `mode` 为 `production`）。
 
-本地开发使用 `doly dev [env]`，`env` 默认 development。
-
-打包使用 `doly build [env]`，`env` 默认 production。
+- 本地开发使用 `doly dev [env]`，`env` 默认 `development`。
+- 打包使用 `doly build [env]`，`env` 默认 `production`。
 
 
 ## 扩展配置
@@ -507,7 +528,7 @@ npm install babel-plugin-import --save-dev
 extraBabelPlugins: [['import', { libraryName: 'antd-mobile', style: true }]]
 ```
 
-然后只需从 antd-mobile 引入模块即可，无需单独引入样式。
+然后只需从 `antd-mobile` 引入模块即可，无需单独引入样式。
 
 ```javascript
 // babel-plugin-import 会帮助你加载 JS 和 CSS
@@ -574,6 +595,8 @@ import "regenerator-runtime/runtime";
 entry: {
   app: ["./src/utils/polyfill", "./src/app.js"]
 },
+
+// 调试IE时，热更新无效
 devServer: {
   hot: false
 }

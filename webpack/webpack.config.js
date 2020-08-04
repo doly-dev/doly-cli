@@ -19,7 +19,8 @@ module.exports = function getWebpackConfig({
     externals,
     extensions,
     alias,
-    devtool
+    devtool,
+    terserOptions
   } = config;
 
   const isDevWithServer = process.env.COMMANDER ==='dev';
@@ -51,6 +52,7 @@ module.exports = function getWebpackConfig({
     },
     optimization: getOptimization({
       enabledMinimize: !isDevWithServer && isProd, 
+      terserOptions,
       opts: optimization
     }),
     resolve: {
