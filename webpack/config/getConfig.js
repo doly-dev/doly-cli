@@ -21,6 +21,7 @@ function getConfig() {
   // 支持设置mode为production
   if (config.mode === "production") {
     process.env.NODE_ENV = "production";
+    config.devtool = userEnvConfig.devtool || userConfig.devtool || undefined;
   }
 
   return config;
