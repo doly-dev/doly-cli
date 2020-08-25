@@ -101,7 +101,7 @@ module.exports = function getWebpackConfig({
   }
 
   if(extensions){
-    webpackConfig.extensions = webpackConfig.extensions.concat(extensions);
+    webpackConfig.resolve.extensions = webpackConfig.resolve.extensions.concat(extensions);
   }
 
   if(alias){
