@@ -12,7 +12,7 @@ const archiver = require('archiver');
 const mkdirp = require('mkdirp');
 
 const clearConsole = require('../utils/clearConsole');
-const {webpackConfig, webpackDevServerConfig, paths, config: userConfig} = require('../webpack');
+const { webpackConfig, webpackDevServerConfig, paths, config: userConfig } = require('../webpack');
 
 // const isInteractive = process.stdout.isTTY;
 
@@ -29,7 +29,7 @@ function build() {
 
   const compiler = webpack(webpackConfig);
 
-  compiler.run((err, stats)=>{
+  compiler.run((err, stats) => {
 
     // if(isInteractive){
     //   clearConsole();
@@ -37,12 +37,12 @@ function build() {
 
     if (err || stats.hasErrors()) {
       // console.log('build failed!');
-      if(err){
+      if (err) {
         error(err);
-      }else if(stats.compilation && stats.compilation.errors && stats.compilation.errors.length > 0){
+      } else if (stats.compilation && stats.compilation.errors && stats.compilation.errors.length > 0) {
         error(stats.compilation.errors[0]);
       }
-      
+
       process.exit(1);
       return;
     }
@@ -64,7 +64,7 @@ function build() {
     console.log();
 
     // 标识配置了zip输出目录
-    if(userConfig.zip && typeof userConfig.zip === 'string'){
+    if (userConfig.zip && typeof userConfig.zip === 'string') {
       let { dir, ext, name } = path.parse(userConfig.zip);
 
       // ext = ext || '.zip';
@@ -83,9 +83,13 @@ function build() {
 
       archive.pipe(output);
 
-      archive.directory(userConfig.outputPath + '/', false);
-
-      archive.finalize();
+      archive.directory(userConfig.outputPath + '/', false, function (data) {
+        // Mac下，只要在Finder访问过的文件夹，都会生成一个.DS_Store的文件
+        if (data.name.indexOf('.DS_Store') > -1) {
+          return false;
+        }
+        return data;
+      }).finalize();
 
       console.log('Zip file: ' + chalk.yellow(zipAbsPath + '/' + name + ext));
       console.log();
