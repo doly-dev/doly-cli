@@ -1,10 +1,10 @@
 const path = require('path');
 
 module.exports = function ({
-  extraPresets=[],
-  extraPlugins=[],
-  browsers=['last 2 versions'],
-  typescript=false
+  extraPresets = [],
+  extraPlugins = [],
+  browsers = ['last 2 versions'],
+  typescript = false
 }) {
   const targets = browsers;
 
@@ -42,7 +42,7 @@ module.exports = function ({
     // Stage 3
     require.resolve("@babel/plugin-syntax-dynamic-import"),
     require.resolve("@babel/plugin-syntax-import-meta"),
-    [require.resolve("@babel/plugin-proposal-class-properties"), { "loose": true }],
+    // [require.resolve("@babel/plugin-proposal-class-properties"), { "loose": true }],
     // require.resolve("@babel/plugin-proposal-json-strings")
 
     // Define
@@ -69,7 +69,7 @@ module.exports = function ({
     ]
   ];
 
-  if(process.env.NODE_ENV === 'production'){
+  if (process.env.NODE_ENV === 'production') {
     plugins.push(
       [
         require.resolve('@babel/plugin-transform-runtime'),
@@ -87,12 +87,12 @@ module.exports = function ({
     [require.resolve("@babel/preset-env"), {
       targets,
       exclude
-    }], 
+    }],
     require.resolve("@babel/preset-react"),
     ...extraPresets,
   ];
 
-  if(typescript){
+  if (typescript) {
     presets.push(require.resolve("@babel/preset-typescript"));
   }
 
