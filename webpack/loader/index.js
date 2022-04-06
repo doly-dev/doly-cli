@@ -24,8 +24,8 @@ module.exports = function (opts) {
 
   const jsRule = {
     test: /\.jsx?$/,
-    include: paths.appSrc,
-    exclude: /(node_modules|bower_components)/,
+    // include: paths.appSrc,
+    // exclude: /(node_modules|bower_components)/,
     enforce: 'pre',
     use: [
       {
