@@ -78,8 +78,7 @@ module.exports = function ({
             require.resolve('@babel/runtime/package.json')
           )
         },
-      ],
-      require.resolve('@babel/plugin-transform-modules-commonjs')
+      ]
     )
   }
 
