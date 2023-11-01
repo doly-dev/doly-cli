@@ -21,7 +21,7 @@
 
 ## 快速开始
 
-```json
+```javascript
 # 全局安装
 npm install doly-cli -g
 
@@ -45,16 +45,18 @@ doly build [env]
 
 示例：
 
-```json
+```javascript
 module.exports = {
   // 支持值为 Object 和 Array
-  'GET /api/users': { users: [1,2] },
+  'GET /api/users': { users: [1, 2] },
 
   // GET POST 可省略
   '/api/users/1': { id: 1 },
 
   // 支持自定义函数，API 参考 express@4
-  'POST /api/users/create': (req, res) => { res.end('OK'); },
+  'POST /api/users/create': (req, res) => {
+    res.end('OK');
+  },
 };
 ```
 
@@ -70,7 +72,7 @@ module.exports = {
 
 `doly build [env]`打包不同环境配置，默认 `env` 为 `production` 。
 
-```json
+```javascript
 # 本地开发读取生产环境配置
 doly dev production
 
@@ -88,29 +90,29 @@ doly build test
 
 doly.config.js
 
-```json
+```javascript
 module.exports = {
   define: {
-    APIURL: 'https://dev.example.com/'
+    APIURL: 'https://dev.example.com/',
   },
   env: {
     test: {
       define: {
-        APIURL: 'https://test.example.com/'
-      }
+        APIURL: 'https://test.example.com/',
+      },
     },
     sit: {
       define: {
-        APIURL: 'https://sit.example.com/'
-      }
+        APIURL: 'https://sit.example.com/',
+      },
     },
     production: {
       define: {
-        APIURL: 'https://prod.example.com/'
-      }
-    }
-  }
-}
+        APIURL: 'https://prod.example.com/',
+      },
+    },
+  },
+};
 ```
 
 ## 配置
@@ -119,7 +121,7 @@ module.exports = {
 
 示例：
 
-```json
+```javascript
 module.exports = {
   ...
 }
@@ -190,13 +192,13 @@ module.exports = {
 
 指定 `webpack` 入口文件，支持 `glob` 格式。默认：
 
-```json
-entry: 'src/app.js'
+```javascript
+entry: 'src/app.js';
 ```
 
 如果是多页面多入口，请使用对象模式，并配置 `optimization` 的 `splitChunks`
 
-```json
+```javascript
 entry: {
   bar: 'src/bar.js',
   foo: 'src/foo.js'
@@ -205,16 +207,16 @@ entry: {
 
 又比如你希望把 `src/pages` 的文件作为入口。可以这样配：
 
-```json
-entry: 'src/pages/*.js'
+```javascript
+entry: 'src/pages/*.js';
 ```
 
 ### outputPath
 
 配置 `webpack` 的 `output.publicPath` 属性。默认：
 
-```json
-outputPath: 'dist'
+```javascript
+outputPath: 'dist';
 ```
 
 ### zip
@@ -223,60 +225,60 @@ outputPath: 'dist'
 
 示例：
 
-```json
-zip: 'build/project.zip'
+```javascript
+zip: 'build/project.zip';
 ```
 
 ### outputFilename
 
 配置 `webpack` 的 `output.filename` 属性。如果设置该值，`hash`配置对该项无效，需自己配置文件名 `hash`。默认：
 
-```json
-outputFilename: '[name].[chunkhash:8].js'
+```javascript
+outputFilename: '[name].[chunkhash:8].js';
 ```
 
 也可以自定义目录
 
-```json
-outputFilename: 'res/j/[name].[chunkhash:8].js'
+```javascript
+outputFilename: 'res/j/[name].[chunkhash:8].js';
 ```
 
 ### outputChunkFilename
 
 配置 `webpack` 的 `output.chunkFilename` 属性。如果设置该值，`hash`配置对该项无效，需自己配置文件名 `hash`。默认：
 
-```json
-outputChunkFilename: '[name].[chunkhash:8].chunk.js'
+```javascript
+outputChunkFilename: '[name].[chunkhash:8].chunk.js';
 ```
 
 也可以自定义目录
 
-```json
-outputChunkFilename: 'res/j/[name].[chunkhash:8].chunk.js'
+```javascript
+outputChunkFilename: 'res/j/[name].[chunkhash:8].chunk.js';
 ```
 
 ### publicPath
 
 配置 `webpack` 的 `output.publicPath` 属性。默认：
 
-```json
-publicPath: '/'
+```javascript
+publicPath: '/';
 ```
 
 ### hash
 
 配置让构建资源文件名带 `hash`，通常会和 `manifest` 配合使用。如果单独设置了 `outputFilename ` `outputChunkFilename ` `css.filename` `css.chunkFilename` 则需要单独指定`filename` 的 hash。默认：
 
-```json
-hash: true
+```javascript
+hash: true;
 ```
 
 ### ignoreMomentLocale
 
 忽略 `moment` 的 `locale` 文件,用于减少尺寸。默认：
 
-```json
-ignoreMomentLocale: false
+```javascript
+ignoreMomentLocale: false;
 ```
 
 _注意开启后，可能导致 `antd` 的日期组件月份显示英文_
@@ -287,7 +289,7 @@ _注意开启后，可能导致 `antd` 的日期组件月份显示英文_
 
 示例：
 
-```json
+```javascript
 manifest: {
   basePath: 'http://www.example.com/'
 },
@@ -297,18 +299,20 @@ manifest: {
 
 配置页面信息，`option` 传给 [html-webpack-plugin](https://www.npmjs.com/package/html-webpack-plugin)。默认：
 
-```json
-html: [{
-  template:'src/index.html', // 指定要打包的html路径和文件名
-  filename: 'index.html', // 指定输出路径和文件名
-}]
+```javascript
+html: [
+  {
+    template: 'src/index.html', // 指定要打包的html路径和文件名
+    filename: 'index.html', // 指定输出路径和文件名
+  },
+];
 ```
 
 ### image
 
 配置图片 [url-loader](https://www.npmjs.com/package/url-loader)。默认：
 
-```json
+```javascript
 image: {
   outputPath: 'images', // 图片输出地址，默认 images
   name: '[name].[hash:8].[ext]', // 文件名
@@ -318,7 +322,7 @@ image: {
 
 也可以自定义目录
 
-```json
+```javascript
 image: {
   outputPath: 'res/i', // 图片输出地址，默认 images
   name: '[name].[hash:8].[ext]', // 文件名
@@ -330,7 +334,7 @@ image: {
 
 配置 [mini-css-extract-plugin](https://www.npmjs.com/package/mini-css-extract-plugin)。如果设置 `filename`，`hash`配置对该项无效，需自己配置文件名 `hash`。如果 `cssInline` 为 `true`，该配置无效。默认：
 
-```json
+```javascript
 css: {
   filename: '[name].[contenthash:8].css',
   chunkFilename: '[name].[contenthash:8].chunk.css'
@@ -339,7 +343,7 @@ css: {
 
 也可以自定义目录
 
-```json
+```javascript
 css: {
   filename: 'res/c/[name].[contenthash:8].css',
   chunkFilename: 'res/c/[name].[contenthash:8].chunk.css'
@@ -366,7 +370,7 @@ css: {
 
 示例：
 
-```json
+```javascript
 replace: {
   search: '__uri',
   replace: 'require',
@@ -380,9 +384,9 @@ replace: {
 
 示例：
 
-```json
+```javascript
 define: {
-  APIURL: 'http://www.example.com/'
+  APIURL: 'http://www.example.com/';
 }
 ```
 
@@ -401,7 +405,7 @@ html:
 
 `doly.config.js` 中:
 
-```json
+```javascript
 externals: {
   react: 'window.React',
   react-dom: 'window.ReactDOM'
@@ -424,25 +428,20 @@ externals: {
 
 配置 [browserslist](https://www.npmjs.com/package/browserslist)，同时作用于 `babel-preset-env` 和 `autoprefixer`。默认：
 
-```json
-browserslist: [
-  '> 1%',
-  'last 4 versions',
-  'Firefox ESR',
-  'not ie < 9',
-]
+```javascript
+browserslist: ['> 1%', 'last 4 versions', 'Firefox ESR', 'not ie < 9'];
 ```
 
 ### transpileDependencies
 
 自定义编译依赖模块。默认情况下只编译 `src` 目录下文件模块，不会编译 `node_modules` 下的模块，如果你依赖的第三方模块存在不兼容的新语法，请使用该配置。例如：
 
-```json
+```javascript
 transpileDependencies: [
   /node_modules\/react-virtualized-auto-sizer/,
   // 其他需要编译的模块
   // ...
-]
+];
 ```
 
 > PS: 你可能需要运行 `npx doly dev production` 来确认哪个模块存在不兼容语法。
@@ -457,10 +456,10 @@ transpileDependencies: [
 
 如部分场景需要在生产构建显示日志，配置如下：
 
-```json
+```javascript
 terserOptions: {
   compress: {
-    drop_console: false
+    drop_console: false;
   }
 }
 ```
@@ -471,14 +470,14 @@ terserOptions: {
 
 非 `production` 环境：
 
-```json
-devtool: 'cheap-module-source-map'
+```javascript
+devtool: 'cheap-module-source-map';
 ```
 
 `production` 环境：
 
-```json
-devtool: undefined
+```javascript
+devtool: undefined;
 ```
 
 ### devServer
@@ -489,22 +488,24 @@ devtool: undefined
 
 配置`mock`文件。默认：
 
-```json
-mockFile: 'mocker/index.js'
+```javascript
+mockFile: 'mocker/index.js';
 ```
 
 `mocker/index.js` 示例
 
-```json
+```javascript
 export default {
   // 支持值为 Object 和 Array
-  'GET /api/users': { users: [1,2] },
+  'GET /api/users': { users: [1, 2] },
 
   // GET POST 可省略
   '/api/users/1': { id: 1 },
 
   // 支持自定义函数，API 参考 express@4
-  'POST /api/users/create': (req, res) => { res.end('OK'); },
+  'POST /api/users/create': (req, res) => {
+    res.end('OK');
+  },
 };
 ```
 
@@ -514,7 +515,7 @@ export default {
 
 示例：
 
-```json
+```javascript
 proxy: {
 	'/app': {
 		target: 'http://xxx/',
@@ -550,10 +551,8 @@ npm install babel-plugin-import --save-dev
 
 - `doly.config.js` 中配置
 
-```json
-extraBabelPlugins: [
-  ['import', { libraryName: 'antd-mobile', style: true }]
-]
+```javascript
+extraBabelPlugins: [['import', { libraryName: 'antd-mobile', style: true }]];
 ```
 
 然后只需从 `antd-mobile` 引入模块即可，无需单独引入样式。
@@ -577,7 +576,7 @@ import { DatePicker } from 'antd-mobile';
 npm install postcss-pxtorem --save-dev
 ```
 
-```json
+```javascript
 extraPostCSSPlugins: [
   require('postcss-pxtorem')({
     rootValue: 75,
@@ -586,9 +585,9 @@ extraPostCSSPlugins: [
     selectorBlackList: [],
     replace: true,
     mediaQuery: false,
-    minPixelValue: 12
-  })
-]
+    minPixelValue: 12,
+  }),
+];
 ```
 
 ## 如何兼容 IE
@@ -618,7 +617,7 @@ import 'regenerator-runtime/runtime';
 
 在 `doly.config.js` 中配置：
 
-```json
+```javascript
 entry: {
   app: ["./src/utils/polyfill", "./src/app.js"]
 },
