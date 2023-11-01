@@ -12,7 +12,7 @@ module.exports = function (opts) {
     image,
     devServer,
     paths,
-    transpileDependencies,
+    transpileDependencies = [],
     ...restOpts
   } = opts;
 
