@@ -115,6 +115,24 @@ module.exports = {
 };
 ```
 
+**PS: 本地运行生产环境配置时，如果有以下配置，需要做一些调整，调试完成后，记得改回去。**
+
+```javascript
+module.exports = {
+  production: {
+    // 改之前
+    // publicPath: 'https://example.com/xxx/xxx/',
+    // outputFilename: 'res/j/[name].[chunkhash:8].js';
+    // outputChunkFilename: 'res/j/[name].[chunkhash:8].chunk.js';
+
+    // 改之后
+    publicPath: '/',
+    // outputFilename: 'res/j/[name].[chunkhash:8].js';
+    // outputChunkFilename: 'res/j/[name].[chunkhash:8].chunk.js';
+  },
+};
+```
+
 ## 配置
 
 `doly` 封装了 `webpack` 部分功能。如需配置，在项目根目录新建 `doly.config.js` 完成。如果是基于 `init` 的项目目录结构，并且没有资源文件的目录规则要求，可以零配置进行开发。
