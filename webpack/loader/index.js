@@ -12,6 +12,7 @@ module.exports = function (opts) {
     image,
     devServer,
     paths,
+    transpileDependencies,
     ...restOpts
   } = opts;
 
@@ -24,8 +25,7 @@ module.exports = function (opts) {
 
   const jsRule = {
     test: /\.jsx?$/,
-    include: paths.appSrc,
-    exclude: /(node_modules|bower_components)/,
+    include: [paths.appSrc, ...transpileDependencies],
     enforce: 'pre',
     use: [
       {
@@ -46,8 +46,7 @@ module.exports = function (opts) {
 
   const tsRule = {
     test: /\.tsx?$/,
-    include: paths.appSrc,
-    exclude: /(node_modules|bower_components)/,
+    include: [paths.appSrc, ...transpileDependencies],
     enforce: 'pre',
     use: [
       {
