@@ -1,9 +1,7 @@
-const { join } = require('path');
 const babelPreset = require('../../babel-preset');
 const cssLoader = require('./css-loader');
 
 module.exports = function (opts) {
-
   const {
     extraBabelPresets: extraPresets,
     extraBabelPlugins: extraPlugins,
@@ -16,12 +14,10 @@ module.exports = function (opts) {
     ...restOpts
   } = opts;
 
-
-  const cwd = process.cwd();
-  const hot = !devServer || typeof devServer.hot === 'undefined' || devServer.hot;
+  const hot =
+    !devServer || typeof devServer.hot === 'undefined' || devServer.hot;
   const isDev = process.env.COMMANDER === 'dev';
   const hmr = hot && isDev;
-  const tsConfigFile = opts.tsConfigFile || join(cwd, 'tsconfig.json');
 
   const jsRule = {
     test: /\.jsx?$/,
@@ -31,18 +27,16 @@ module.exports = function (opts) {
       {
         loader: 'babel-loader',
         options: {
-          customize: paths.resolveOwn(
-            'utils/webpack-overrides'
-          ),
+          customize: paths.resolveOwn('utils/webpack-overrides'),
           ...babelPreset({
             extraPresets,
             extraPlugins,
-            browsers
-          })
-        }
-      }
-    ]
-  }
+            browsers,
+          }),
+        },
+      },
+    ],
+  };
 
   const tsRule = {
     test: /\.tsx?$/,
@@ -52,35 +46,27 @@ module.exports = function (opts) {
       {
         loader: 'babel-loader',
         options: {
-          customize: paths.resolveOwn(
-            'utils/webpack-overrides'
-          ),
+          customize: paths.resolveOwn('utils/webpack-overrides'),
           ...babelPreset({
             extraPresets,
             extraPlugins,
             browsers,
-            typescript: true
-          })
-        }
+            typescript: true,
+          }),
+        },
       },
-      {
-        loader: 'ts-loader',
-        options: {
-          configFile: tsConfigFile,
-        }
-      }
-    ]
-  }
+    ],
+  };
 
   if (replace) {
     jsRule.use.push({
       loader: 'string-replace-loader',
-      options: replace
+      options: replace,
     });
 
     tsRule.use.push({
       loader: 'string-replace-loader',
-      options: replace
+      options: replace,
     });
   }
 
@@ -96,10 +82,10 @@ module.exports = function (opts) {
     use: [
       {
         loader: 'url-loader',
-        options: image
-      }
-    ]
-  }
+        options: image,
+      },
+    ],
+  };
 
   const htmlRule = {
     test: /\.(html)$/,
@@ -107,9 +93,9 @@ module.exports = function (opts) {
       loader: 'html-loader',
       options: {
         // attrs: ['img:src']
-      }
-    }
-  }
+      },
+    },
+  };
 
   const rules = [jsRule, tsRule, ...cssRules, imgRule, htmlRule];
 
@@ -119,23 +105,15 @@ module.exports = function (opts) {
       test: /\.jsx?$/,
       exclude: /(node_modules|bower_components)/,
       enforce: 'post',
-      use: [
-        { loader: paths.resolveOwn('utils/hmr-loader') }
-      ]
+      use: [{ loader: paths.resolveOwn('utils/hmr-loader') }],
     });
     rules.push({
       test: /\.tsx?$/,
       exclude: /(node_modules|bower_components)/,
       enforce: 'post',
-      use: [
-        { loader: paths.resolveOwn('utils/hmr-loader') }
-      ]
+      use: [{ loader: paths.resolveOwn('utils/hmr-loader') }],
     });
   }
 
   return rules;
-}
-
-
-
-
+};
