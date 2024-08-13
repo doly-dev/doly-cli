@@ -211,7 +211,7 @@ module.exports = {
 指定 `webpack` 入口文件，支持 `glob` 格式。默认：
 
 ```javascript
-entry: 'src/app.js';
+entry: './src/app.{js,jsx,ts,tsx}';
 ```
 
 如果是多页面多入口，请使用对象模式，并配置 `optimization` 的 `splitChunks`

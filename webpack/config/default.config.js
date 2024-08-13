@@ -3,14 +3,13 @@ const isProd = process.env.NODE_ENV === 'production';
 const defaultDevtool = isProd ? undefined : 'cheap-module-source-map';
 
 module.exports = {
-
   // 指定 webpack 入口文件
   // 如果是多页面多入口，请使用对象模式，并配置 optimization的splitChunks
-  entry: './src/app.js',
+  entry: './src/app.{js,jsx,ts,tsx}',
 
   // 配置 webpack 的 output.publicPath 属性。
   outputPath: 'dist',
-  
+
   // 配置构建完成后生成 `zip` 文件，相对于当前项目根目录
   // zip: 'build/project.zip',
 
@@ -32,18 +31,20 @@ module.exports = {
   // },
 
   // 多页面使用数组
-  html: [{
-    // title: '', // 页面标题
-    template:'src/index.html', // 指定要打包的html路径和文件名
-    filename: 'index.html', // 指定输出路径和文件名
-    // chunks: [] // 引入需要的chunk
-  }],
+  html: [
+    {
+      // title: '', // 页面标题
+      template: 'src/index.html', // 指定要打包的html路径和文件名
+      filename: 'index.html', // 指定输出路径和文件名
+      // chunks: [] // 引入需要的chunk
+    },
+  ],
 
   // 图片url-loader 配置
   image: {
     outputPath: 'images', // 图片输出地址，默认 images
     name: '[name].[hash:8].[ext]', // 文件名
-    limit: 1024*8 // 小于该大小的图片转为base64
+    limit: 1024 * 8, // 小于该大小的图片转为base64
   },
 
   // 配置 MiniCssExtractPlugin 。设置filename之后，hash配置无效，需自己配置hash。如果设置cssInline为true，该配置无效。
@@ -114,9 +115,9 @@ module.exports = {
   //      cacheGroups:{ // 这里开始设置缓存的 chunks
   //          priority: 0, // 缓存组优先级
   //          vendor: { // key 为entry中定义的 入口名称
-  //              chunks: "initial", // 必须三选一： "initial" | "all" | "async"(默认就是async) 
+  //              chunks: "initial", // 必须三选一： "initial" | "all" | "async"(默认就是async)
   //              test: /react|lodash/, // 正则规则验证，如果符合就提取 chunk
-  //              name: "vendor", // 要缓存的 分隔出来的 chunk 名称 
+  //              name: "vendor", // 要缓存的 分隔出来的 chunk 名称
   //              minSize: 30000,
   //              minChunks: 1,
   //              enforce: true,
@@ -169,5 +170,4 @@ module.exports = {
 
   // TODO: 代码检查，支持本地自定义 .eslintrc，默认使用 airbnb 代码规范
   // eslint: false,
-}
-
+};

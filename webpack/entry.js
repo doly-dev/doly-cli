@@ -1,5 +1,5 @@
 /**
- * ref: 
+ * ref:
  * https://github.com/sorrycc/roadhog/blob/master/src/utils/getEntry.js
  */
 
@@ -8,7 +8,9 @@ const { existsSync } = require('fs');
 const glob = require('glob');
 const isPlainObject = require('is-plain-object');
 
-const webpackHotDevClientPath = require.resolve('react-dev-utils/webpackHotDevClient');
+const webpackHotDevClientPath = require.resolve(
+  'react-dev-utils/webpackHotDevClient'
+);
 
 function getEntry(filePath) {
   const key = basename(filePath).replace(/\.(j|t)sx?$/, '');
@@ -37,19 +39,14 @@ function getEntries(files) {
   }, {});
 }
 
+const exts = ['js', 'jsx', 'ts', 'tsx'];
 function getExistsDefaultEntry(cwd) {
-  if (existsSync(join(cwd, './src/app.js'))) {
-    return './src/app.js';
+  for (let i = 0; i < exts.length; i++) {
+    const currentPath = './src/app.' + exts[i];
+    if (existsSync(join(cwd, currentPath))) {
+      return currentPath;
+    }
   }
-  if (existsSync(join(cwd, './src/app.jsx'))) {
-    return './src/app.jsx';
-  }
-  // if (existsSync(join(cwd, './src/app.ts'))) {
-  //   return './src/app.ts';
-  // }
-  // if (existsSync(join(cwd, './src/app.tsx'))) {
-  //   return './src/app.tsx';
-  // }
   // default
   return './src/app.js';
 }
@@ -60,11 +57,11 @@ function getExistsDefaultEntry(cwd) {
 // 2. 对象
 // 3. 字符串
 // 4. 数组
-module.exports = function ({ 
-  cwd = process.cwd(), 
+module.exports = function ({
+  cwd = process.cwd(),
   entry,
-  isBuild=true,
-  hot=true
+  isBuild = true,
+  hot = true,
 } = {}) {
   let entryObj = null;
   if (!entry) {
@@ -83,7 +80,7 @@ module.exports = function ({
     entryObj = entry;
   } else {
     throw new Error(
-      `entry should be String, Array or Plain Object, but got ${entry}`,
+      `entry should be String, Array or Plain Object, but got ${entry}`
     );
   }
 
@@ -99,9 +96,9 @@ module.exports = function ({
               ...memo,
               [key]: entryObj[key],
             },
-      {},
+      {}
     );
   }
 
   return entryObj;
-}
+};
