@@ -78,7 +78,6 @@ module.exports = function (opts) {
 
   const imgRule = {
     test: /\.(jpe?g|png|gif|svg|eot|ttf|woff)$/i,
-    include: paths.appSrc,
     use: [
       {
         loader: 'url-loader',
