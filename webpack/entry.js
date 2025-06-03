@@ -8,22 +8,20 @@ const { existsSync } = require('fs');
 const glob = require('glob');
 const isPlainObject = require('is-plain-object');
 
-const webpackHotDevClientPath = require.resolve(
-  'react-dev-utils/webpackHotDevClient'
-);
+const webpackHotDevClientPath = require.resolve('react-dev-utils/webpackHotDevClient');
 
 function getEntry(filePath) {
   const key = basename(filePath).replace(/\.(j|t)sx?$/, '');
   return {
-    [key]: filePath,
+    [key]: filePath
   };
 }
 
 function getFiles(entry, cwd) {
   const files = glob.sync(entry, {
-    cwd,
+    cwd
   });
-  return files.map(file => {
+  return files.map((file) => {
     // console.log('file, ', file);
     // return file.charAt(0) === '.' ? file : `.${sep}${file}`;
     return resolve(cwd, file);
@@ -34,7 +32,7 @@ function getEntries(files) {
   return files.reduce((memo, file) => {
     return {
       ...memo,
-      ...getEntry(file),
+      ...getEntry(file)
     };
   }, {});
 }
@@ -57,16 +55,11 @@ function getExistsDefaultEntry(cwd) {
 // 2. 对象
 // 3. 字符串
 // 4. 数组
-module.exports = function ({
-  cwd = process.cwd(),
-  entry,
-  isBuild = true,
-  hot = true,
-} = {}) {
+module.exports = function ({ cwd = process.cwd(), entry, isBuild = true, hot = true } = {}) {
   let entryObj = null;
   if (!entry) {
     entryObj = {
-      index: getExistsDefaultEntry(cwd),
+      index: getExistsDefaultEntry(cwd)
     };
   } else if (typeof entry === 'string') {
     const files = getFiles(entry, cwd);
@@ -79,9 +72,7 @@ module.exports = function ({
   } else if (isPlainObject(entry)) {
     entryObj = entry;
   } else {
-    throw new Error(
-      `entry should be String, Array or Plain Object, but got ${entry}`
-    );
+    throw new Error(`entry should be String, Array or Plain Object, but got ${entry}`);
   }
 
   if (!isBuild && hot) {
@@ -90,11 +81,11 @@ module.exports = function ({
         !Array.isArray(entryObj[key])
           ? {
               ...memo,
-              [key]: [webpackHotDevClientPath, entryObj[key]],
+              [key]: [webpackHotDevClientPath, entryObj[key]]
             }
           : {
               ...memo,
-              [key]: entryObj[key],
+              [key]: entryObj[key]
             },
       {}
     );

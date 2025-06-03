@@ -5,12 +5,12 @@ module.exports = function getPaths({
   cwd = process.cwd(),
   src = 'src',
   outputPath = 'dist',
-  imageOutputPath = 'images',
+  imageOutputPath = 'images'
   // zip = 'build'
 } = {}) {
   const appDirectory = realpathSync(cwd);
-  const resolveApp = relativePath => resolve(appDirectory, relativePath);
-  const resolveOwn = relativePath => resolve(__dirname, '../..', relativePath);
+  const resolveApp = (relativePath) => resolve(appDirectory, relativePath);
+  const resolveOwn = (relativePath) => resolve(__dirname, '../..', relativePath);
 
   return {
     appBuild: resolveApp(outputPath),
@@ -24,6 +24,6 @@ module.exports = function getPaths({
     ownPackageJson: resolveOwn('package.json'),
     resolveApp,
     resolveOwn,
-    appDirectory,
-  }
-}
+    appDirectory
+  };
+};

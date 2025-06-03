@@ -19,10 +19,7 @@ function reloadConfig() {
   loadConfig();
 }
 
-function watchConfigs({
-  configFile = CONFIGFILE,
-  ...opts
-}={}) {
+function watchConfigs({ configFile = CONFIGFILE, ...opts } = {}) {
   // 配置文件
   const rcFile = paths.resolveApp(configFile);
 
@@ -41,4 +38,4 @@ module.exports = {
   reloadConfig,
   watchConfigs,
   unwatchConfigs
-}
+};

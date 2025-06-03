@@ -21,9 +21,7 @@ function findNpm() {
       which.sync(npms[i]);
       // console.log('use npm: ' + npms[i]);
       return npms[i];
-    } catch (e) {
-
-    }
+    } catch (e) {}
   }
   throw new Error('Please install npm');
 }
@@ -34,28 +32,28 @@ function isDirectory(directoryName) {
 }
 
 function isEmptyDirectory(directoryName) {
-  if(!isDirectory(directoryName)){
+  if (!isDirectory(directoryName)) {
     error(`Folder does not exist.`);
     return;
   }
 
   const dirList = fs.readdirSync(directoryName);
-  
-  if(dirList.length === 0){
+
+  if (dirList.length === 0) {
     return true;
-  }else if(dirList.length === 1 && dirList[0].toLowerCase() === '.ds_store'){
+  } else if (dirList.length === 1 && dirList[0].toLowerCase() === '.ds_store') {
     return true;
-  }else{
+  } else {
     return false;
   }
 }
 
 function changePackageJsonName(appPath, appName) {
-  return new Promise(resolve=>{
+  return new Promise((resolve) => {
     const pkgFile = `${appPath}/package.json`;
-    if(fs.existsSync(pkgFile) && appName){
+    if (fs.existsSync(pkgFile) && appName) {
       changeJsonfile(pkgFile, {
-        name: appName 
+        name: appName
       });
     }
 
@@ -73,7 +71,7 @@ const scaffoldList = [
     name: 'mobx + wonder-ui',
     description: 'Mobx with wonder-ui, suitable for mobile.',
     templatePath: path.resolve(__dirname, '../templates/wonderui')
-  },
+  }
   // {
   //   name: 'antd',
   //   templatePath: path.resolve(__dirname, '../templates/antd'),
@@ -86,23 +84,18 @@ const scaffoldList = [
   // }
 ];
 
-module.exports = function(
-  {
-    appName,
-    cwd = process.cwd()
-  } = {}
-) {
-// return info(path.resolve(__dirname, '../templates/simple'));
+module.exports = function ({ appName, cwd = process.cwd() } = {}) {
+  // return info(path.resolve(__dirname, '../templates/simple'));
   // 项目目录
   let appPath = appName ? path.resolve(cwd, appName) : cwd;
 
   // 如果不存在该目录，则新建一个
-  if(!fs.existsSync(appPath)){
+  if (!fs.existsSync(appPath)) {
     fs.mkdirSync(appPath);
   }
 
   // 如果该目录不是空目录，提示
-  if(!isEmptyDirectory(appPath)){
+  if (!isEmptyDirectory(appPath)) {
     console.log();
     error(chalk.red('Please empty folders for this operation or introduced to the project name.'));
     error(chalk.red('请在空文件夹进行该操作 或 传入项目名称。 doly init [projectName]'));
@@ -117,14 +110,13 @@ module.exports = function(
         name: 'scaffoldDesc',
         message: 'Which one do you want to use the scaffold?',
         // message: '请选择一个你要用的脚手架？',
-        choices: scaffoldList.map(sca=>sca.description)
+        choices: scaffoldList.map((sca) => sca.description)
       }
     ])
-    .then(answers => {
-      const {templatePath} = scaffoldList.find(sca=>sca.description===answers.scaffoldDesc);
+    .then((answers) => {
+      const { templatePath } = scaffoldList.find((sca) => sca.description === answers.scaffoldDesc);
 
       if (templatePath || fs.existsSync(templatePath)) {
-
         const scaffoldCopy = ora(`scaffold copying...`);
         scaffoldCopy.start();
 
@@ -136,7 +128,7 @@ module.exports = function(
 
         // ---
 
-        changePackageJsonName(appPath, appName).then(()=>{
+        changePackageJsonName(appPath, appName).then(() => {
           const npm = findNpm();
 
           const spinnerInstall = ora(`${npm} installing...`);
@@ -157,12 +149,10 @@ module.exports = function(
             console.log('    Bundles the app into output files "dist" for production.');
             console.log();
           });
-        })
-      }else{
+        });
+      } else {
         console.log('Scaffold is undefined. Please contact author...');
         console.log('Author email: 369756941@qq.com');
       }
-
     });
 };
-

@@ -7,11 +7,13 @@ let webpackConfig = null;
 let webpackDevServerConfig = null;
 
 webpackConfig = getWebpackConfig({
-  config, paths
+  config,
+  paths
 });
 
 webpackDevServerConfig = getWebpackDevServerConfig({
-  config, paths
+  config,
+  paths
 });
 
 module.exports = {
@@ -21,4 +23,4 @@ module.exports = {
   webpackDevServerConfig,
   watchConfigs,
   unwatchConfigs
-}
+};

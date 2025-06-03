@@ -21,14 +21,14 @@ module.exports = function (opts) {
     define,
     manifest,
     html,
-    css={},
+    css = {},
 
     devServer,
     paths
   } = opts;
 
   const hot = !devServer || typeof devServer.hot === 'undefined' || devServer.hot;
-  const isDev = process.env.COMMANDER ==='dev';
+  const isDev = process.env.COMMANDER === 'dev';
   const hmr = hot && isDev;
 
   let plugins = [];
@@ -38,7 +38,7 @@ module.exports = function (opts) {
   const defaultHtml = resolve(__dirname, './document.ejs');
 
   // 默认html
-  if(htmls.length <= 0){
+  if (htmls.length <= 0) {
     htmls.push({
       filename: 'index.html',
       template: defaultHtml,
@@ -48,49 +48,56 @@ module.exports = function (opts) {
     });
   }
 
-  htmls.forEach(htmlItem=>{
-    plugins.push(new HtmlWebpackPlugin({
-      ...htmlItem,
-      template: htmlItem.template ? paths.resolveApp(htmlItem.template) : defaultHtml
-    }))
-  })
+  htmls.forEach((htmlItem) => {
+    plugins.push(
+      new HtmlWebpackPlugin({
+        ...htmlItem,
+        template: htmlItem.template ? paths.resolveApp(htmlItem.template) : defaultHtml
+      })
+    );
+  });
 
   // MiniCssExtractPlugin
-  if(!cssInline){
+  if (!cssInline) {
     let hashText = hash && !isDev ? '.[contenthash:8]' : '';
-    let cssFilename = (css.filename && typeof css.filename === 'string') ? css.filename : '';
-    let cssChunkFilename = (css.chunkFilename && typeof css.chunkFilename === 'string') ? css.chunkFilename : '';
+    let cssFilename = css.filename && typeof css.filename === 'string' ? css.filename : '';
+    let cssChunkFilename =
+      css.chunkFilename && typeof css.chunkFilename === 'string' ? css.chunkFilename : '';
 
-    if(!cssFilename){
+    if (!cssFilename) {
       cssFilename = `[name]${hashText}.css`;
     }
 
-    if(!cssChunkFilename){
+    if (!cssChunkFilename) {
       cssChunkFilename = `[name]${hashText}.chunk.css`;
     }
 
-    plugins.push(new MiniCssExtractPlugin(Object.assign({}, css, {
-      filename: cssFilename,
-      chunkFilename: cssChunkFilename
-    })));
+    plugins.push(
+      new MiniCssExtractPlugin(
+        Object.assign({}, css, {
+          filename: cssFilename,
+          chunkFilename: cssChunkFilename
+        })
+      )
+    );
   }
 
   // webpack.DefinePlugin
-  if(isPlainObject(define)){
+  if (isPlainObject(define)) {
     let defines = {};
-    for(let prop in define){
+    for (let prop in define) {
       defines[prop] = JSON.stringify(define[prop]);
     }
-    plugins.push(new webpack.DefinePlugin(defines))
+    plugins.push(new webpack.DefinePlugin(defines));
   }
 
   // ManifestPlugin
-  if(isPlainObject(manifest)){
+  if (isPlainObject(manifest)) {
     plugins.push(new ManifestPlugin(manifest));
   }
 
   // webpack.IgnorePlugin
-  if(ignoreMomentLocale){
+  if (ignoreMomentLocale) {
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
     // solution that requires the user to opt into importing specific locales.
@@ -103,7 +110,7 @@ module.exports = function (opts) {
   let copyRet = [];
 
   // public目录，自动添加 copy
-  if(existsSync(paths.resolveApp('public'))){
+  if (existsSync(paths.resolveApp('public'))) {
     copyRet.push({
       from: paths.resolveApp('public'),
       to: paths.appBuild,
@@ -111,13 +118,13 @@ module.exports = function (opts) {
     });
   }
 
-  if(copy){
-    if(isPlainObject(copy)){
+  if (copy) {
+    if (isPlainObject(copy)) {
       copy = [copy];
     }
 
-    if(Array.isArray(copy)){
-      copy.forEach(copyItem=>{
+    if (Array.isArray(copy)) {
+      copy.forEach((copyItem) => {
         const { from: copyFrom, to, ...copyItemRest } = copyItem;
         copyRet.push({
           from: paths.resolveApp(copyFrom),
@@ -128,24 +135,26 @@ module.exports = function (opts) {
     }
   }
 
-  if(copyRet.length > 0){
+  if (copyRet.length > 0) {
     plugins.push(new CopyWebpackPlugin(copyRet));
   }
 
   // ProgressBar
   if (process.platform === 'win32') {
-    plugins.push(new ProgressBarPlugin({
-      format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
-      clear: true
-    }));
+    plugins.push(
+      new ProgressBarPlugin({
+        format: '  build [:bar] ' + chalk.green.bold(':percent') + ' (:elapsed seconds)',
+        clear: true
+      })
+    );
   } else {
     plugins.push(new WebpackBar());
   }
 
   // HotModuleReplacementPlugin
-  if(hmr){
+  if (hmr) {
     plugins.push(new webpack.HotModuleReplacementPlugin());
   }
 
   return plugins;
-}
+};

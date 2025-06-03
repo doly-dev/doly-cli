@@ -6,18 +6,17 @@ const normalizeTheme = require('./normalizeTheme');
 module.exports = function ({
   cwd = process.cwd(),
   theme,
-  hmr=true,
-  cssInline=false,
-  disableCSSModules=false,
-  disableCSSSourceMap=false,
-  cssModulesWithAffix=true,
-  cssModulesExcludes=[],
-  cssLoaderOptions={},
-  lessLoaderOptions={},
-  extraPostCSSPlugins=[],
-  browsers=['last 2 versions']
+  hmr = true,
+  cssInline = false,
+  disableCSSModules = false,
+  disableCSSSourceMap = false,
+  cssModulesWithAffix = true,
+  cssModulesExcludes = [],
+  cssLoaderOptions = {},
+  lessLoaderOptions = {},
+  extraPostCSSPlugins = [],
+  browsers = ['last 2 versions']
 }) {
-
   const appNodeModulesPath = resolve(cwd, 'node_modules');
 
   theme = normalizeTheme(theme);
@@ -25,20 +24,20 @@ module.exports = function ({
   const cssOptions = {
     importLoaders: 1,
     sourceMap: !disableCSSSourceMap,
-    ...cssLoaderOptions,
-  }
+    ...cssLoaderOptions
+  };
 
   const cssModulesConfig = {
     modules: true,
-    localIdentName: cssOptions.localIdentName || '[name]_[local]_[hash:base64:5]',
-  }
+    localIdentName: cssOptions.localIdentName || '[name]_[local]_[hash:base64:5]'
+  };
 
   function createCSSLoader(cssModules) {
     return {
       loader: 'css-loader',
       options: {
         ...cssOptions,
-        ...(cssModules ? cssModulesConfig : {}),
+        ...(cssModules ? cssModulesConfig : {})
       }
     };
   }
@@ -50,11 +49,14 @@ module.exports = function ({
       sourceMap: !disableCSSSourceMap,
       plugins: [
         require('postcss-flexbugs-fixes'),
-        require('autoprefixer')({overrideBrowserslist: browsers, flexbox: 'no-2009'}),
-        ...extraPostCSSPlugins,
+        require('autoprefixer')({
+          overrideBrowserslist: browsers,
+          flexbox: 'no-2009'
+        }),
+        ...extraPostCSSPlugins
       ]
     }
-  }
+  };
 
   const lessLoader = {
     loader: 'less-loader',
@@ -62,9 +64,9 @@ module.exports = function ({
       modifyVars: theme,
       javascriptEnabled: true,
       sourceMap: !disableCSSSourceMap,
-      ...lessLoaderOptions,
+      ...lessLoaderOptions
     }
-  }
+  };
 
   function cssExclude(filePath) {
     if (/node_modules/.test(filePath)) {
@@ -88,39 +90,25 @@ module.exports = function ({
 
   const cssRule = {
     test: /\.css$/,
-    use: [
-      createCSSLoader(!disableCSSModules),
-      postcssLoader
-    ],
+    use: [createCSSLoader(!disableCSSModules), postcssLoader],
     exclude: cssExclude
   };
 
   const lessRule = {
     test: /\.less$/,
-    use: [
-      createCSSLoader(!disableCSSModules),
-      postcssLoader,
-      lessLoader
-    ],
+    use: [createCSSLoader(!disableCSSModules), postcssLoader, lessLoader],
     exclude: cssExclude
   };
 
   const cssInNodeModulesRule = {
     test: /\.css$/,
-    use: [
-      createCSSLoader(false),
-      postcssLoader
-    ],
+    use: [createCSSLoader(false), postcssLoader],
     include: appNodeModulesPath
   };
 
   const lessInNodeModulesRule = {
     test: /\.less$/,
-    use: [
-      createCSSLoader(false),
-      postcssLoader,
-      lessLoader
-    ],
+    use: [createCSSLoader(false), postcssLoader, lessLoader],
     include: appNodeModulesPath
   };
 
@@ -130,27 +118,19 @@ module.exports = function ({
   if (cssModulesWithAffix) {
     affixCssModulesRules.push({
       test: /\.module\.css$/,
-      use: [
-        createCSSLoader(true),
-        postcssLoader
-      ]
+      use: [createCSSLoader(true), postcssLoader]
     });
 
     affixCssModulesRules.push({
       test: /\.module\.less$/,
-      use: [
-        createCSSLoader(true),
-        postcssLoader,
-        lessLoader
-      ]
+      use: [createCSSLoader(true), postcssLoader, lessLoader]
     });
   }
 
   // 过滤cssModules的规则
   const cssModulesExcludesRules = [];
 
-  if(cssModulesExcludes){
-    
+  if (cssModulesExcludes) {
     function cssModulesExcludesTest(exclude) {
       return function (filePath) {
         if (exclude instanceof RegExp) {
@@ -158,42 +138,45 @@ module.exports = function ({
         } else {
           return filePath.indexOf(exclude) > -1;
         }
-      }
+      };
     }
 
     cssModulesExcludes.forEach((exclude, index) => {
-
       const ext = extname(exclude).toLowerCase();
 
-      const innerLoader = [
-        createCSSLoader(false),
-        postcssLoader,
-      ];
+      const innerLoader = [createCSSLoader(false), postcssLoader];
 
-      if(ext === '.less'){
+      if (ext === '.less') {
         innerLoader.push(lessLoader);
       }
 
       cssModulesExcludesRules.push({
         test: cssModulesExcludesTest(exclude),
         use: innerLoader
-      })
+      });
     });
   }
 
-  return [cssRule, lessRule, cssInNodeModulesRule, lessInNodeModulesRule, ...affixCssModulesRules, ...cssModulesExcludesRules].map(rule=>{
-    if(cssInline){
+  return [
+    cssRule,
+    lessRule,
+    cssInNodeModulesRule,
+    lessInNodeModulesRule,
+    ...affixCssModulesRules,
+    ...cssModulesExcludesRules
+  ].map((rule) => {
+    if (cssInline) {
       rule.use.unshift('style-loader');
-    }else{
+    } else {
       rule.use.unshift({
         loader: MiniCssExtractPlugin.loader,
         options: {
           hmr: hmr,
-          reloadAll: true,
+          reloadAll: true
         }
       });
     }
 
     return rule;
   });
-}
+};

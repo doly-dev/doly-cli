@@ -9,7 +9,7 @@ function watch(key, files) {
     watchers[key] = [];
   }
   const watcher = chokidar.watch(files, {
-    ignoreInitial: true,
+    ignoreInitial: true
   });
   watchers[key].push(watcher);
   return watcher;
@@ -20,7 +20,7 @@ function unwatch(key) {
     return Object.keys(watchers).forEach(unwatch);
   }
   if (watchers[key]) {
-    watchers[key].forEach(watcher => {
+    watchers[key].forEach((watcher) => {
       watcher.close();
     });
     delete watchers[key];
@@ -30,4 +30,4 @@ function unwatch(key) {
 module.exports = {
   watch,
   unwatch
-}
+};

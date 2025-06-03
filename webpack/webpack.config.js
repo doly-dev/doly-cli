@@ -17,7 +17,7 @@ module.exports = function getWebpackConfig({ config = {}, paths = {} }) {
     extensions,
     alias,
     devtool,
-    terserOptions,
+    terserOptions
   } = config;
 
   const isDevWithServer = process.env.COMMANDER === 'dev';
@@ -25,20 +25,17 @@ module.exports = function getWebpackConfig({ config = {}, paths = {} }) {
   const mode = isProd ? 'production' : 'development';
 
   // 开启模块热替换。如果要兼容IE9/10/11，需关闭模块热替换。由于模块热替换代码[react-dev-utils/webpackHotDevClient]没有进行编译，含有箭头函数等语法
-  const hot =
-    !devServer || typeof devServer.hot === 'undefined' || devServer.hot;
+  const hot = !devServer || typeof devServer.hot === 'undefined' || devServer.hot;
 
   // 热更新(HMR)不能和[chunkhash]同时使用。
   const jsFileHash = hash && !isDevWithServer ? '.[chunkhash:8]' : '';
 
   let jsFilename = outputFilename ? outputFilename : `[name]${jsFileHash}.js`;
-  let jsChunkFilename = outputChunkFilename
-    ? outputChunkFilename
-    : `[name]${jsFileHash}.chunk.js`;
+  let jsChunkFilename = outputChunkFilename ? outputChunkFilename : `[name]${jsFileHash}.chunk.js`;
 
   const rules = loader({
     ...config,
-    paths,
+    paths
   });
 
   const webpackConfig = {
@@ -48,29 +45,29 @@ module.exports = function getWebpackConfig({ config = {}, paths = {} }) {
       path: paths.appBuild,
       publicPath: publicPath,
       filename: jsFilename,
-      chunkFilename: jsChunkFilename,
+      chunkFilename: jsChunkFilename
     },
     optimization: getOptimization({
       enabledMinimize: !isDevWithServer && isProd,
       terserOptions,
-      opts: optimization,
+      opts: optimization
     }),
     resolve: {
       // fix 设置绝对路径导致npm安装的多版本包索引不到的问题
       // ref: https://webpack.docschina.org/configuration/resolve/#resolve-modules
       // modules: [paths.appNodeModules, paths.ownNodeModules],
-      extensions: ['.mjs', '.js', '.ts', '.tsx', '.json', '.jsx'],
+      extensions: ['.mjs', '.js', '.ts', '.tsx', '.json', '.jsx']
     },
     resolveLoader: {
       moduleExtensions: ['-loader'],
-      modules: [paths.appNodeModules, paths.ownNodeModules],
+      modules: [paths.appNodeModules, paths.ownNodeModules]
     },
     module: {
-      rules: rules,
+      rules: rules
     },
     plugins: plugins({
       ...config,
-      paths,
+      paths
     }),
     devtool,
     // Some libraries import Node modules but don't use them in the browser.
@@ -80,8 +77,8 @@ module.exports = function getWebpackConfig({ config = {}, paths = {} }) {
       fs: 'empty',
       net: 'empty',
       tls: 'empty',
-      child_process: 'empty',
-    },
+      child_process: 'empty'
+    }
   };
 
   if (externals) {
@@ -89,8 +86,7 @@ module.exports = function getWebpackConfig({ config = {}, paths = {} }) {
   }
 
   if (extensions) {
-    webpackConfig.resolve.extensions =
-      webpackConfig.resolve.extensions.concat(extensions);
+    webpackConfig.resolve.extensions = webpackConfig.resolve.extensions.concat(extensions);
   }
 
   if (alias) {

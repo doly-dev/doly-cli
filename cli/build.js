@@ -1,4 +1,3 @@
-
 const webpack = require('webpack');
 const path = require('path');
 const fs = require('fs');
@@ -21,7 +20,6 @@ const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
 const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 
 function build() {
-
   // console.log('building');
 
   // 删除构建文件
@@ -30,7 +28,6 @@ function build() {
   const compiler = webpack(webpackConfig);
 
   compiler.run((err, stats) => {
-
     // if(isInteractive){
     //   clearConsole();
     // }
@@ -39,7 +36,11 @@ function build() {
       // console.log('build failed!');
       if (err) {
         error(err);
-      } else if (stats.compilation && stats.compilation.errors && stats.compilation.errors.length > 0) {
+      } else if (
+        stats.compilation &&
+        stats.compilation.errors &&
+        stats.compilation.errors.length > 0
+      ) {
         error(stats.compilation.errors[0]);
       }
 
@@ -55,11 +56,11 @@ function build() {
       stats,
       {
         root: webpackConfig.output.path,
-        sizes: {},
+        sizes: {}
       },
       webpackConfig.output.path,
       WARN_AFTER_BUNDLE_GZIP_SIZE,
-      WARN_AFTER_CHUNK_GZIP_SIZE,
+      WARN_AFTER_CHUNK_GZIP_SIZE
     );
     console.log();
 
@@ -83,18 +84,19 @@ function build() {
 
       archive.pipe(output);
 
-      archive.directory(userConfig.outputPath + '/', false, function (data) {
-        // Mac下，只要在Finder访问过的文件夹，都会生成一个.DS_Store的文件
-        if (data.name.indexOf('.DS_Store') > -1) {
-          return false;
-        }
-        return data;
-      }).finalize();
+      archive
+        .directory(userConfig.outputPath + '/', false, function (data) {
+          // Mac下，只要在Finder访问过的文件夹，都会生成一个.DS_Store的文件
+          if (data.name.indexOf('.DS_Store') > -1) {
+            return false;
+          }
+          return data;
+        })
+        .finalize();
 
       console.log('Zip file: ' + chalk.yellow(zipAbsPath + '/' + name + ext));
       console.log();
     }
-
   });
 }
 

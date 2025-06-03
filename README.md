@@ -56,7 +56,7 @@ module.exports = {
   // 支持自定义函数，API 参考 express@4
   'POST /api/users/create': (req, res) => {
     res.end('OK');
-  },
+  }
 };
 ```
 
@@ -93,25 +93,25 @@ doly.config.js
 ```javascript
 module.exports = {
   define: {
-    APIURL: 'https://dev.example.com/',
+    APIURL: 'https://dev.example.com/'
   },
   env: {
     test: {
       define: {
-        APIURL: 'https://test.example.com/',
-      },
+        APIURL: 'https://test.example.com/'
+      }
     },
     sit: {
       define: {
-        APIURL: 'https://sit.example.com/',
-      },
+        APIURL: 'https://sit.example.com/'
+      }
     },
     production: {
       define: {
-        APIURL: 'https://prod.example.com/',
-      },
-    },
-  },
+        APIURL: 'https://prod.example.com/'
+      }
+    }
+  }
 };
 ```
 
@@ -126,10 +126,10 @@ module.exports = {
     // outputChunkFilename: 'res/j/[name].[chunkhash:8].chunk.js';
 
     // 改之后
-    publicPath: '/',
+    publicPath: '/'
     // outputFilename: 'res/j/[name].[chunkhash:8].js';
     // outputChunkFilename: 'res/j/[name].[chunkhash:8].chunk.js';
-  },
+  }
 };
 ```
 
@@ -321,8 +321,8 @@ manifest: {
 html: [
   {
     template: 'src/index.html', // 指定要打包的html路径和文件名
-    filename: 'index.html', // 指定输出路径和文件名
-  },
+    filename: 'index.html' // 指定输出路径和文件名
+  }
 ];
 ```
 
@@ -456,7 +456,7 @@ browserslist: ['> 1%', 'last 4 versions', 'Firefox ESR', 'not ie < 9'];
 
 ```javascript
 transpileDependencies: [
-  /node_modules\/react-virtualized-auto-sizer/,
+  /node_modules\/react-virtualized-auto-sizer/
   // 其他需要编译的模块
   // ...
 ];
@@ -523,7 +523,7 @@ export default {
   // 支持自定义函数，API 参考 express@4
   'POST /api/users/create': (req, res) => {
     res.end('OK');
-  },
+  }
 };
 ```
 
@@ -603,8 +603,8 @@ extraPostCSSPlugins: [
     selectorBlackList: [],
     replace: true,
     mediaQuery: false,
-    minPixelValue: 12,
-  }),
+    minPixelValue: 12
+  })
 ];
 ```
 

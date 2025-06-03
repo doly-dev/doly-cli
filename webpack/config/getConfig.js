@@ -19,8 +19,8 @@ function getConfig() {
   const config = Object.assign({}, defaultConfig, userConfig, userEnvConfig);
 
   // 支持设置mode为production
-  if (config.mode === "production") {
-    process.env.NODE_ENV = "production";
+  if (config.mode === 'production') {
+    process.env.NODE_ENV = 'production';
     config.devtool = userEnvConfig.devtool || userConfig.devtool || undefined;
   }
 

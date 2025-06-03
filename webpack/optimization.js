@@ -1,7 +1,7 @@
 const isPlainObject = require('is-plain-object');
 const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const lodash = require("lodash");
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const lodash = require('lodash');
 
 const defaultTerserOptions = {
   parse: {
@@ -10,7 +10,7 @@ const defaultTerserOptions = {
     // into invalid ecma 5 code. This is why the 'compress' and 'output'
     // sections only apply transformations that are ecma 5 safe
     // https://github.com/facebook/create-react-app/pull/4234
-    ecma: 8,
+    ecma: 8
   },
   compress: {
     ecma: 5,
@@ -50,18 +50,18 @@ const defaultTerserOptions = {
 
     // fix：antd的Form.create() 和 react-mobx 的observer一起使用在IE下报错的问题
     keep_classnames: true,
-    keep_fnames: true,
+    keep_fnames: true
   },
   mangle: {
-    safari10: true,
+    safari10: true
   },
   output: {
     ecma: 5,
     comments: false,
     // Turned on because emoji and regex is not minified properly using default
     // https://github.com/facebook/create-react-app/issues/2488
-    ascii_only: true,
-  },
+    ascii_only: true
+  }
 };
 
 // 默认优化项
@@ -76,18 +76,17 @@ function getDefaultOptimization(enabledMinimize = true, terserOptions = {}) {
         parallel: true,
         // Enable file caching
         cache: true,
-        sourceMap: enabledMinimize,
+        sourceMap: enabledMinimize
       }),
       new OptimizeCSSAssetsPlugin({})
     ]
   };
 }
 
-module.exports = function ({
-  enabledMinimize = true,
-  terserOptions = {},
-  opts = {}
-}) {
-  return Object.assign({}, getDefaultOptimization(enabledMinimize, terserOptions), isPlainObject(opts) ? opts : {});
-}
-
+module.exports = function ({ enabledMinimize = true, terserOptions = {}, opts = {} }) {
+  return Object.assign(
+    {},
+    getDefaultOptimization(enabledMinimize, terserOptions),
+    isPlainObject(opts) ? opts : {}
+  );
+};

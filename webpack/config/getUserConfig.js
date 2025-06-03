@@ -9,10 +9,7 @@ const { CONFIGFILE } = require('./contants');
  * @return {[type]}            [description]
  */
 module.exports = function getUserConfig(opts = {}) {
-  const {
-    cwd = process.cwd(),
-    configFile = CONFIGFILE
-  } = opts;
+  const { cwd = process.cwd(), configFile = CONFIGFILE } = opts;
 
   // 配置文件
   const rcFile = resolve(cwd, configFile);
@@ -21,10 +18,10 @@ module.exports = function getUserConfig(opts = {}) {
   let userConfig = {};
 
   // 如果存在用户配置，获取用户配置项
-  if(existsSync(rcFile)){
+  if (existsSync(rcFile)) {
     userConfig = require(rcFile);
-// console.log('rc ', userConfig);
+    // console.log('rc ', userConfig);
   }
 
   return userConfig;
-}
+};

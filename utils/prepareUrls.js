@@ -4,19 +4,19 @@ const url = require('url');
 const chalk = require('chalk');
 
 function prepareUrls(protocol, host, port, pathname) {
-  const formatUrl = hostname =>
+  const formatUrl = (hostname) =>
     url.format({
       protocol,
       hostname,
       port,
-      pathname: pathname || '/',
+      pathname: pathname || '/'
     });
-  const prettyPrintUrl = hostname =>
+  const prettyPrintUrl = (hostname) =>
     url.format({
       protocol,
       hostname,
       port: chalk.bold(port),
-      pathname: pathname || '/',
+      pathname: pathname || '/'
     });
 
   const isUnspecifiedHost = host === '0.0.0.0' || host === '::';
@@ -29,11 +29,7 @@ function prepareUrls(protocol, host, port, pathname) {
       if (lanUrlForConfig) {
         // Check if the address is a private ip
         // https://en.wikipedia.org/wiki/Private_network#Private_IPv4_address_spaces
-        if (
-          /^10[.]|^30[.]|^172[.](1[6-9]|2[0-9]|3[0-1])[.]|^192[.]168[.]/.test(
-            lanUrlForConfig,
-          )
-        ) {
+        if (/^10[.]|^30[.]|^172[.](1[6-9]|2[0-9]|3[0-1])[.]|^192[.]168[.]/.test(lanUrlForConfig)) {
           // Address is private, format it for later use
           lanUrlForTerminal = prettyPrintUrl(lanUrlForConfig);
         } else {
@@ -53,7 +49,7 @@ function prepareUrls(protocol, host, port, pathname) {
     lanUrlForConfig,
     lanUrlForTerminal,
     localUrlForTerminal,
-    localUrlForBrowser,
+    localUrlForBrowser
   };
 }
 

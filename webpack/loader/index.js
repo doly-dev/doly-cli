@@ -14,8 +14,7 @@ module.exports = function (opts) {
     ...restOpts
   } = opts;
 
-  const hot =
-    !devServer || typeof devServer.hot === 'undefined' || devServer.hot;
+  const hot = !devServer || typeof devServer.hot === 'undefined' || devServer.hot;
   const isDev = process.env.COMMANDER === 'dev';
   const hmr = hot && isDev;
 
@@ -31,17 +30,17 @@ module.exports = function (opts) {
           ...babelPreset({
             extraPresets,
             extraPlugins,
-            browsers,
-          }),
-        },
-      },
-    ],
+            browsers
+          })
+        }
+      }
+    ]
   };
 
   const mjsRule = {
     test: /\.mjs$/,
     include: /node_modules/,
-    type: 'javascript/auto',
+    type: 'javascript/auto'
   };
 
   const tsRule = {
@@ -57,29 +56,29 @@ module.exports = function (opts) {
             extraPresets,
             extraPlugins,
             browsers,
-            typescript: true,
-          }),
-        },
-      },
-    ],
+            typescript: true
+          })
+        }
+      }
+    ]
   };
 
   if (replace) {
     jsRule.use.push({
       loader: 'string-replace-loader',
-      options: replace,
+      options: replace
     });
 
     tsRule.use.push({
       loader: 'string-replace-loader',
-      options: replace,
+      options: replace
     });
   }
 
   const cssRules = cssLoader({
     ...restOpts,
     hmr,
-    browsers,
+    browsers
   });
 
   const imgRule = {
@@ -87,9 +86,9 @@ module.exports = function (opts) {
     use: [
       {
         loader: 'url-loader',
-        options: image,
-      },
-    ],
+        options: image
+      }
+    ]
   };
 
   const htmlRule = {
@@ -98,8 +97,8 @@ module.exports = function (opts) {
       loader: 'html-loader',
       options: {
         // attrs: ['img:src']
-      },
-    },
+      }
+    }
   };
 
   const rules = [mjsRule, jsRule, tsRule, ...cssRules, imgRule, htmlRule];
@@ -110,7 +109,7 @@ module.exports = function (opts) {
       test: /\.(jsx?|mjs|tsx?)$/,
       exclude: /(node_modules|bower_components)/,
       enforce: 'post',
-      use: [{ loader: paths.resolveOwn('utils/hmr-loader') }],
+      use: [{ loader: paths.resolveOwn('utils/hmr-loader') }]
     });
   }
 

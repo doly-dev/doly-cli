@@ -1,7 +1,7 @@
 const { existsSync } = require('fs');
 const { resolve, isAbsolute } = require('path');
 
-module.exports = function(theme, opts = {}) {
+module.exports = function (theme, opts = {}) {
   const { cwd = process.cwd() } = opts;
   if (!theme) return {};
   if (typeof theme === 'string') {
@@ -18,4 +18,4 @@ module.exports = function(theme, opts = {}) {
     }
   }
   return theme;
-}
+};
