@@ -20,7 +20,7 @@ module.exports = function (opts) {
   const hmr = hot && isDev;
 
   const jsRule = {
-    test: /\.jsx?$/,
+    test: /\.(jsx?|mjs)$/,
     include: [paths.appSrc, ...transpileDependencies],
     enforce: 'pre',
     use: [
@@ -36,6 +36,12 @@ module.exports = function (opts) {
         },
       },
     ],
+  };
+
+  const mjsRule = {
+    test: /\.mjs$/,
+    include: /node_modules/,
+    type: 'javascript/auto',
   };
 
   const tsRule = {
@@ -96,18 +102,12 @@ module.exports = function (opts) {
     },
   };
 
-  const rules = [jsRule, tsRule, ...cssRules, imgRule, htmlRule];
+  const rules = [mjsRule, jsRule, tsRule, ...cssRules, imgRule, htmlRule];
 
   // 默认在entry中插入 模块热替换 代码
   if (hmr) {
     rules.push({
-      test: /\.jsx?$/,
-      exclude: /(node_modules|bower_components)/,
-      enforce: 'post',
-      use: [{ loader: paths.resolveOwn('utils/hmr-loader') }],
-    });
-    rules.push({
-      test: /\.tsx?$/,
+      test: /\.(jsx?|mjs|tsx?)$/,
       exclude: /(node_modules|bower_components)/,
       enforce: 'post',
       use: [{ loader: paths.resolveOwn('utils/hmr-loader') }],
