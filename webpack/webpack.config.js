@@ -56,7 +56,8 @@ module.exports = function getWebpackConfig({ config = {}, paths = {} }) {
       // fix 设置绝对路径导致npm安装的多版本包索引不到的问题
       // ref: https://webpack.docschina.org/configuration/resolve/#resolve-modules
       // modules: [paths.appNodeModules, paths.ownNodeModules],
-      extensions: ['.mjs', '.js', '.ts', '.tsx', '.json', '.jsx']
+      extensions: ['.mjs', '.js', '.ts', '.tsx', '.json', '.jsx'],
+      mainFields: ['module', 'main', 'browser', 'exports']
     },
     resolveLoader: {
       moduleExtensions: ['-loader'],
