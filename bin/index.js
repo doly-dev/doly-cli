@@ -18,8 +18,8 @@ program
 
 program
   .command('list [projectName]')
-  .alias('i')
-  .description('初始化项目脚手架')
+  .alias('l')
+  .description('列出可用模板')
   .action(function (projectName, options) {
     list();
   });
